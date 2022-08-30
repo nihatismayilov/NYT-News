@@ -30,6 +30,7 @@ platform :ios do
       proj: "NYT-News.xcodeproj",
       sonarqube_xml: true,
       github: true,
+      arch: "x86_64"
     )
     sonar(
       sonar_login: options[:sonar_login]
