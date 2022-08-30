@@ -20,8 +20,8 @@ platform :ios do
   lane :test do |options|
     scan(
       derived_data_path: "./DerivedData",
-      scheme: "NYT-News",
-      output_directory: "./reports"
+      output_directory: "./reports",
+      scheme: "NYT-News"
       )
     slather(
       build_directory: "./DerivedData",

@@ -1,10 +1,10 @@
 name: Build and Test
 
-on: 
+on:
   pull_request:
     branches:
-     - main
-    
+      - main
+
 jobs:
 
   test:
@@ -18,10 +18,13 @@ jobs:
 
       - name: Bundle install
         run: bundle install
+        
+      - name: Install Sonar scanner
+        run: brew install sonar-scanner
 
       - name: Build and test
-        run:  |
+        run: |
           bundle exec fastlane test \
           sonar_login:"$SONAR_TOKEN"
         env:
-         SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
