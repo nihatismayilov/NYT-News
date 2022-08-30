@@ -17,10 +17,23 @@ default_platform(:ios)
 
 platform :ios do
   desc "Built and test application nt"
-  lane :test do
+  lane :test do |options|
     scan(
+      derived_data_path: "./DerivedData",
       scheme: "NYT-News",
       output_directory: "./reports"
       )
+    slather(
+      build_directory: "./DerivedData",
+      output_directory: "./reports",
+      scheme: "NYT-News",
+      proj: "NYT-News.xcodeproj",
+      sonarqube_xml: true,
+      github: true,
+      arch: "x86_64"
+    )
+    sonar(
+      sonar_login: options[:sonar_login]
+    )
   end
 end
