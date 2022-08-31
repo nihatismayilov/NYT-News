@@ -19,6 +19,14 @@ jobs:
       - name: Bundle install
         run: bundle install
 
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install lizard
+        run: pip install lizard
+
       - name: Install Sonar scanner
         run: brew install sonar-scanner
 

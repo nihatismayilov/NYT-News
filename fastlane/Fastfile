@@ -32,6 +32,16 @@ platform :ios do
       github: true,
       arch: "x86_64"
     )
+    lizard(
+      source_folder: ".", 
+      language: "swift", 
+      export_type: "xml", 
+      report_file: "reports/lizard-report.xml"
+    )
+    swiftlint(
+      output_file: "./reports/swiftlint.txt", 
+      ignore_exit_status: true
+    )
     sonar(
       sonar_login: options[:sonar_login]
     )
