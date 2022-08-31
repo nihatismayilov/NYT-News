@@ -19,6 +19,9 @@ jobs:
       - name: Bundle install
         run: bundle install
 
+      - name: Install Sonar scanner
+        run: brew install sonar-scanner
+
       - name: Build and test
         run:  |
           bundle exec fastlane test \
