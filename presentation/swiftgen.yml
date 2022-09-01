@@ -1,0 +1,10 @@
+input_dir: NYT-News/
+output_dir: NYT-News/Generated/
+ 
+ xcassets:
+     inputs:
+      - presentation/Assets/Media.xcassets
+      - presentation/Assets/Colors.xcassets
+     outputs:
+      - templateName: swift5
+      - output: XCAssets+Generated.swift
