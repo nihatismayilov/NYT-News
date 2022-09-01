@@ -12,6 +12,8 @@
 		B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506D28BCAF4B0072E95A /* Media.xcassets */; };
 		B859507028BCAF550072E95A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506F28BCAF550072E95A /* Colors.xcassets */; };
 		B859508028BCB01C0072E95A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B859507F28BCB01C0072E95A /* SnapKit */; };
+		B89F51C128BFBBD500BD649D /* Generated in Resources */ = {isa = PBXBuildFile; fileRef = B89F51C028BFBBD500BD649D /* Generated */; };
+		B89F51C528BFBC6F00BD649D /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B89F51C428BFBC6F00BD649D /* swiftgen.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		B859501A28BCADCC0072E95A /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		B859506D28BCAF4B0072E95A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		B859506F28BCAF550072E95A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		B89F51C028BFBBD500BD649D /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
+		B89F51C428BFBC6F00BD649D /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = swiftgen.yml; path = presentation/swiftgen.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,8 @@
 		B859500D28BCADCC0072E95A = {
 			isa = PBXGroup;
 			children = (
+				B89F51C428BFBC6F00BD649D /* swiftgen.yml */,
+				B89F51C028BFBBD500BD649D /* Generated */,
 				B825C9BD28BE32B300452978 /* PresentationInfo.plist */,
 				B859506C28BCAF3D0072E95A /* DI */,
 				B859508328BCB0F50072E95A /* Model */,
@@ -176,6 +182,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B89F51C128BFBBD500BD649D /* Generated in Resources */,
+				B89F51C528BFBC6F00BD649D /* swiftgen.yml in Resources */,
 				B825C9BE28BE32B300452978 /* PresentationInfo.plist in Resources */,
 				B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */,
 				B859507028BCAF550072E95A /* Colors.xcassets in Resources */,
