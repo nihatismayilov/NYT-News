@@ -10,8 +10,11 @@
 		B825C9BE28BE32B300452978 /* PresentationInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B825C9BD28BE32B300452978 /* PresentationInfo.plist */; };
 		B859501B28BCADCC0072E95A /* presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = B859501A28BCADCC0072E95A /* presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506D28BCAF4B0072E95A /* Media.xcassets */; };
-		B859507028BCAF550072E95A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506F28BCAF550072E95A /* Colors.xcassets */; };
 		B859508028BCB01C0072E95A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B859507F28BCB01C0072E95A /* SnapKit */; };
+		B8FCE1C528C0DDB100007A4D /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B8FCE1C428C0DDB100007A4D /* swiftgen.yml */; };
+		B8FCE1C728C0DDB800007A4D /* Generated in Resources */ = {isa = PBXBuildFile; fileRef = B8FCE1C628C0DDB800007A4D /* Generated */; };
+		B8FCE1D028C0DF9A00007A4D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */; };
+		B8FCE1D328C0DFD100007A4D /* Generated in Sources */ = {isa = PBXBuildFile; fileRef = B8FCE1C628C0DDB800007A4D /* Generated */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,7 +22,9 @@
 		B859501728BCADCC0072E95A /* presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B859501A28BCADCC0072E95A /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		B859506D28BCAF4B0072E95A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		B859506F28BCAF550072E95A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		B8FCE1C428C0DDB100007A4D /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		B8FCE1C628C0DDB800007A4D /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
+		B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,11 +42,13 @@
 		B859500D28BCADCC0072E95A = {
 			isa = PBXGroup;
 			children = (
+				B8FCE1C428C0DDB100007A4D /* swiftgen.yml */,
+				B8FCE1C628C0DDB800007A4D /* Generated */,
+				B8FCE1CC28C0DDED00007A4D /* Model */,
+				B8FCE1CB28C0DDE900007A4D /* View */,
+				B8FCE1CA28C0DDE200007A4D /* ViewModel */,
+				B8FCE1C928C0DDCC00007A4D /* DI */,
 				B825C9BD28BE32B300452978 /* PresentationInfo.plist */,
-				B859506C28BCAF3D0072E95A /* DI */,
-				B859508328BCB0F50072E95A /* Model */,
-				B859508428BCB1000072E95A /* View */,
-				B859508528BCB1040072E95A /* ViewModel */,
 				B859506B28BCAF360072E95A /* Assets */,
 				B859501928BCADCC0072E95A /* presentation */,
 				B859501828BCADCC0072E95A /* Products */,
@@ -68,37 +75,37 @@
 			isa = PBXGroup;
 			children = (
 				B859506D28BCAF4B0072E95A /* Media.xcassets */,
-				B859506F28BCAF550072E95A /* Colors.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		B859506C28BCAF3D0072E95A /* DI */ = {
+		B8FCE1C928C0DDCC00007A4D /* DI */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = DI;
+			name = DI;
 			sourceTree = "<group>";
 		};
-		B859508328BCB0F50072E95A /* Model */ = {
+		B8FCE1CA28C0DDE200007A4D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		B8FCE1CB28C0DDE900007A4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B8FCE1CC28C0DDED00007A4D /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		B859508428BCB1000072E95A /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		B859508528BCB1040072E95A /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +154,7 @@
 				TargetAttributes = {
 					B859501628BCADCC0072E95A = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -177,8 +185,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B825C9BE28BE32B300452978 /* PresentationInfo.plist in Resources */,
+				B8FCE1C728C0DDB800007A4D /* Generated in Resources */,
 				B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */,
-				B859507028BCAF550072E95A /* Colors.xcassets in Resources */,
+				B8FCE1C528C0DDB100007A4D /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +198,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8FCE1D028C0DF9A00007A4D /* HomeVC.swift in Sources */,
+				B8FCE1D328C0DFD100007A4D /* Generated in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +329,7 @@
 		B859501F28BCADCC0072E95A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -338,6 +350,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -346,6 +359,7 @@
 		B859502028BCADCC0072E95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
