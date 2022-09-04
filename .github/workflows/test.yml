@@ -30,6 +30,9 @@ jobs:
       - name: Install Sonar scanner
         run: brew install sonar-scanner
 
+      - name: Install Swiftgen
+        run: brew install swiftgen
+
       - name: Build and test
         run:  |
           bundle exec fastlane test \

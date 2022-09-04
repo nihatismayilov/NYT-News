@@ -13,11 +13,13 @@
 		B859507828BCAFEE0072E95A /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B859507728BCAFEE0072E95A /* RxRelay */; };
 		B859507A28BCAFEE0072E95A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B859507928BCAFEE0072E95A /* RxSwift */; };
 		B859507D28BCAFFB0072E95A /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = B859507C28BCAFFB0072E95A /* Swinject */; };
+		B8EEFD1B28C1E1780057990E /* DomainDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEFD1A28C1E1780057990E /* DomainDI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B859503128BCADEF0072E95A /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B859503428BCADEF0072E95A /* domain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = domain.h; sourceTree = "<group>"; };
+		B8EEFD1A28C1E1780057990E /* DomainDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainDI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,10 +41,6 @@
 		B859502728BCADEF0072E95A = {
 			isa = PBXGroup;
 			children = (
-				B859506928BCAF160072E95A /* DI */,
-				B859506828BCAF0C0072E95A /* Use cases */,
-				B859506728BCAF040072E95A /* Repositories */,
-				B859506628BCAEFA0072E95A /* Entities */,
 				B859503328BCADEF0072E95A /* domain */,
 				B859503228BCADEF0072E95A /* Products */,
 			);
@@ -59,37 +57,18 @@
 		B859503328BCADEF0072E95A /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				B8EEFD1928C1E1650057990E /* DI */,
 				B859503428BCADEF0072E95A /* domain.h */,
 			);
 			path = domain;
 			sourceTree = "<group>";
 		};
-		B859506628BCAEFA0072E95A /* Entities */ = {
+		B8EEFD1928C1E1650057990E /* DI */ = {
 			isa = PBXGroup;
 			children = (
+				B8EEFD1A28C1E1780057990E /* DomainDI.swift */,
 			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
-		B859506728BCAF040072E95A /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
-			sourceTree = "<group>";
-		};
-		B859506828BCAF0C0072E95A /* Use cases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Use cases";
-			sourceTree = "<group>";
-		};
-		B859506928BCAF160072E95A /* DI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DI;
+			name = DI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +121,7 @@
 				TargetAttributes = {
 					B859503028BCADEF0072E95A = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -183,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8EEFD1B28C1E1780057990E /* DomainDI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +221,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -297,7 +278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -312,6 +293,7 @@
 		B859503928BCADEF0072E95A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -331,15 +313,18 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nihatismayilov.domain;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		B859503A28BCADEF0072E95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -359,9 +344,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nihatismayilov.domain;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

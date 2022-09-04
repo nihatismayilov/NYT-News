@@ -1,19 +1,19 @@
 //
-//  HomeVC.swift
+//  ViewController.swift
 //  presentation
 //
-//  Created by Nihad Ismayilov on 01.09.22.
+//  Created by Nihad Ismayilov on 03.09.22.
 //
 
 import UIKit
 
-class HomeVC: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        
+        // Do any additional setup after loading the view.
+        let image = Asset.image
     }
     
 

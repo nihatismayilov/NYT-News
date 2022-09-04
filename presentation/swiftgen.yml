@@ -57,8 +57,8 @@
 ## For more info, use `swiftgen config doc` to open the full documentation on GitHub.
 ## https://github.com/SwiftGen/SwiftGen/tree/6.6.2/Documentation/
 
-input_dir: ./
-output_dir: ./Generated/
+input_dir: ./presentation/
+output_dir: ./presentation/Generated/
  
 xcassets:
   inputs:

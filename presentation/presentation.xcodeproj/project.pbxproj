@@ -9,22 +9,41 @@
 /* Begin PBXBuildFile section */
 		B825C9BE28BE32B300452978 /* PresentationInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B825C9BD28BE32B300452978 /* PresentationInfo.plist */; };
 		B859501B28BCADCC0072E95A /* presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = B859501A28BCADCC0072E95A /* presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506D28BCAF4B0072E95A /* Media.xcassets */; };
 		B859508028BCB01C0072E95A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B859507F28BCB01C0072E95A /* SnapKit */; };
+		B8A7F0DF28C4D597001BF17E /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7F0DE28C4D597001BF17E /* XCAssets+Generated.swift */; };
+		B8A7F0E028C4D5A9001BF17E /* XCAssets+Generated.swift in Resources */ = {isa = PBXBuildFile; fileRef = B8A7F0DE28C4D597001BF17E /* XCAssets+Generated.swift */; };
+		B8EEFD1128C1E0420057990E /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8EEFD1028C1E0420057990E /* domain.framework */; };
+		B8EEFD1228C1E0420057990E /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8EEFD1028C1E0420057990E /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8EEFD1E28C1E2660057990E /* PresentationDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEFD1D28C1E2660057990E /* PresentationDI.swift */; };
+		B8EEFD3E28C3A5650057990E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EEFD3D28C3A5650057990E /* ViewController.swift */; };
+		B8EEFD4828C3B05E0057990E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B859506D28BCAF4B0072E95A /* Media.xcassets */; };
 		B8FCE1C528C0DDB100007A4D /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = B8FCE1C428C0DDB100007A4D /* swiftgen.yml */; };
-		B8FCE1C728C0DDB800007A4D /* Generated in Resources */ = {isa = PBXBuildFile; fileRef = B8FCE1C628C0DDB800007A4D /* Generated */; };
-		B8FCE1D028C0DF9A00007A4D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */; };
-		B8FCE1D328C0DFD100007A4D /* Generated in Sources */ = {isa = PBXBuildFile; fileRef = B8FCE1C628C0DDB800007A4D /* Generated */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B8EEFD1328C1E0420057990E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B8EEFD1228C1E0420057990E /* domain.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B825C9BD28BE32B300452978 /* PresentationInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PresentationInfo.plist; sourceTree = "<group>"; };
 		B859501728BCADCC0072E95A /* presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B859501A28BCADCC0072E95A /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		B859506D28BCAF4B0072E95A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		B8A7F0DE28C4D597001BF17E /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
+		B8EEFD1028C1E0420057990E /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8EEFD1D28C1E2660057990E /* PresentationDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationDI.swift; sourceTree = "<group>"; };
+		B8EEFD3D28C3A5650057990E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B8FCE1C428C0DDB100007A4D /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
-		B8FCE1C628C0DDB800007A4D /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
-		B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8EEFD1128C1E0420057990E /* domain.framework in Frameworks */,
 				B859508028BCB01C0072E95A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,16 +62,12 @@
 		B859500D28BCADCC0072E95A = {
 			isa = PBXGroup;
 			children = (
+				B8EEFD3D28C3A5650057990E /* ViewController.swift */,
 				B8FCE1C428C0DDB100007A4D /* swiftgen.yml */,
-				B8FCE1C628C0DDB800007A4D /* Generated */,
-				B8FCE1CC28C0DDED00007A4D /* Model */,
-				B8FCE1CB28C0DDE900007A4D /* View */,
-				B8FCE1CA28C0DDE200007A4D /* ViewModel */,
-				B8FCE1C928C0DDCC00007A4D /* DI */,
 				B825C9BD28BE32B300452978 /* PresentationInfo.plist */,
-				B859506B28BCAF360072E95A /* Assets */,
 				B859501928BCADCC0072E95A /* presentation */,
 				B859501828BCADCC0072E95A /* Products */,
+				B8EEFD0F28C1E0420057990E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +82,9 @@
 		B859501928BCADCC0072E95A /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				B8A7F0DD28C4D597001BF17E /* Generated */,
+				B859506B28BCAF360072E95A /* Assets */,
+				B8EEFD1C28C1E2550057990E /* DI */,
 				B859501A28BCADCC0072E95A /* presentation.h */,
 			);
 			path = presentation;
@@ -79,33 +98,28 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		B8FCE1C928C0DDCC00007A4D /* DI */ = {
+		B8A7F0DD28C4D597001BF17E /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				B8A7F0DE28C4D597001BF17E /* XCAssets+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		B8EEFD0F28C1E0420057990E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B8EEFD1028C1E0420057990E /* domain.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B8EEFD1C28C1E2550057990E /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				B8EEFD1D28C1E2660057990E /* PresentationDI.swift */,
 			);
 			name = DI;
-			sourceTree = "<group>";
-		};
-		B8FCE1CA28C0DDE200007A4D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ViewModel;
-			sourceTree = "<group>";
-		};
-		B8FCE1CB28C0DDE900007A4D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B8FCE1CF28C0DF9A00007A4D /* HomeVC.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		B8FCE1CC28C0DDED00007A4D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,10 +140,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B859501E28BCADCC0072E95A /* Build configuration list for PBXNativeTarget "presentation" */;
 			buildPhases = (
+				B8EEFD4228C3A9ED0057990E /* ShellScript */,
 				B859501228BCADCC0072E95A /* Headers */,
 				B859501328BCADCC0072E95A /* Sources */,
 				B859501428BCADCC0072E95A /* Frameworks */,
 				B859501528BCADCC0072E95A /* Resources */,
+				B8EEFD1328C1E0420057990E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -184,22 +200,43 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8A7F0E028C4D5A9001BF17E /* XCAssets+Generated.swift in Resources */,
+				B8EEFD4828C3B05E0057990E /* Media.xcassets in Resources */,
 				B825C9BE28BE32B300452978 /* PresentationInfo.plist in Resources */,
-				B8FCE1C728C0DDB800007A4D /* Generated in Resources */,
-				B859506E28BCAF4B0072E95A /* Media.xcassets in Resources */,
 				B8FCE1C528C0DDB100007A4D /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B8EEFD4228C3A9ED0057990E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nswiftgen config run\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B859501328BCADCC0072E95A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8FCE1D028C0DF9A00007A4D /* HomeVC.swift in Sources */,
-				B8FCE1D328C0DFD100007A4D /* Generated in Sources */,
+				B8A7F0DF28C4D597001BF17E /* XCAssets+Generated.swift in Sources */,
+				B8EEFD3E28C3A5650057990E /* ViewController.swift in Sources */,
+				B8EEFD1E28C1E2660057990E /* PresentationDI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +294,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -314,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -349,10 +386,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nihatismayilov.presentation;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -379,9 +417,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nihatismayilov.presentation;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

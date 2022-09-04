@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import presentation
+import domain
+import data
+import Swinject
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,9 +19,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let assembler = Assembler([
+            DomainAssembly(),
+//            DataAssembly(),
+            PresentationAssembly()
+        ])
+        
+//        let startVC = assembler.resolver.resolve(HomeVC.self)!
+        
+//        self.setupInitialPage(startVC)
         
         return true
+    }
+    
+    private func setupInitialPage(_ vc: UIViewController) {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+                
+//        let navigationController = UIBaseNavigationController(rootViewController: vc)
+//        navigationController.navigationBar.isHidden = true
+//        self.window?.rootViewController = navigationController
+//        self.window?.makeKeyAndVisible()
     }
 }
 
