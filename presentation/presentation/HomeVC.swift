@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+public class HomeVC: BaseVC<HomeViewModel> {
+    
+    
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        
+    }
+}

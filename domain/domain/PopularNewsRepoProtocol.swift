@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Promises
+
+public protocol PopularNewsRepoProtocol {
+    func getPopularNews() -> Promise<PopularNews>
+}

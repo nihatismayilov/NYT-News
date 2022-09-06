@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import UIKit
+
+public class BaseVC<VM>: UIViewController {
+    
+    var vm: VM? = nil
+    var router: RouterProtocol? = nil
+}

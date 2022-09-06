@@ -9,5 +9,5 @@ import Foundation
 import Promises
 
 protocol PopularNewsRemoteDataSourceProtocol {
-    func getPopularNews() -> Promise<AttractionsResponseDTO>
+    func getPopularNews() -> Promise<PopularNewsResponseDTO>
 }

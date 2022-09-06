@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import Swinject
+import domain
+
+
+public class PresentationAssembly: Assembly {
+    public init () {}
+    
+    public func assemble(container: Container) {
+        container.register(HomeViewModel.self) { r in
+            return HomeViewModel(getPopularnewsUseCase: r.resolve(GetPopularNewsUseCase.self)!)
+        }
+    }
+}

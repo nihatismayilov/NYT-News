@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+class MenuVC: BaseVC<HomeViewModel> {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+    }
+}

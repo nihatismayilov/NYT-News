@@ -6,3 +6,25 @@
 //
 
 import Foundation
+import UIKit
+
+class HomeNavigationVC: UINavigationController, UIGestureRecognizerDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        
+        let vc = HomeVC()
+        
+        self.viewControllers = [vc]
+        
+        interactivePopGestureRecognizer?.delegate = self
+        interactivePopGestureRecognizer?.isEnabled = true
+        
+//        navigationBar.layer.allowsEdgeAntialiasing = true
+//        navigationBar.prefersLargeTitles = true
+//        navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        vc.navigationItem.title = "Alarm"
+    }
+    
+}

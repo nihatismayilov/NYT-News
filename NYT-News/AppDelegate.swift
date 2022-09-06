@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import presentation
-import domain
-import data
 import Swinject
+import presentation
+import data
+import domain
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,24 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let assembler = Assembler([
             DomainAssembly(),
-//            DataAssembly(),
+            DataAssembly(),
             PresentationAssembly()
         ])
         
-//        let startVC = assembler.resolver.resolve(HomeVC.self)!
-        
-//        self.setupInitialPage(startVC)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        window?.rootViewController = Router(resolver: assembler.resolver).tabbarVC()
         
         return true
-    }
-    
-    private func setupInitialPage(_ vc: UIViewController) {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-                
-//        let navigationController = UIBaseNavigationController(rootViewController: vc)
-//        navigationController.navigationBar.isHidden = true
-//        self.window?.rootViewController = navigationController
-//        self.window?.makeKeyAndVisible()
     }
 }
 

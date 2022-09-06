@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import UIKit
+
+extension UILabel {
+    func getFont(name: String, ofSize: Int) {
+        let customFont = UIFont(name: name, size: CGFloat(ofSize))
+        self.font = UIFontMetrics.default.scaledFont(for: customFont ?? UIFont.systemFont(ofSize: UIFont.labelFontSize))
+        self.adjustsFontForContentSizeCategory = true
+    }
+}
