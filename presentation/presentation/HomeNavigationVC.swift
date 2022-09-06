@@ -12,7 +12,7 @@ class HomeNavigationVC: UINavigationController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .black
         
         let vc = HomeVC()
         
