@@ -7,9 +7,9 @@
 
 import Foundation
 
-class ProfileVC: BaseVC<HomeViewModel> {
-    override func viewDidLoad() {
+public class ProfileVC: BaseVC<HomeViewModel> {
+    public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Asset.Colors.backgroundColor.color
     }
 }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-class SearchVC: BaseVC<HomeViewModel> {
-    override func viewDidLoad() {
+public class ExploreVC: BaseVC<HomeViewModel> {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
     }

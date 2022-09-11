@@ -22,7 +22,7 @@ extension PopularNewsResponseDTO.PopularResultsDTO.MediaDTO {
 
 extension PopularNewsResponseDTO.PopularResultsDTO {
     func toDomain() -> PopularNews.PopularResults {
-        return PopularNews.PopularResults.init(url: self.url ?? "", id: self.id ?? 0, publishedDate: self.publishedDate ?? "", category: self.category ?? "", title: self.title ?? "", abstract: self.abstract ?? "", media: (self.media?.toDomain())!)
+        return PopularNews.PopularResults.init(url: self.url ?? "", id: self.id ?? 0, updateDate: self.updateDate ?? "", category: self.category ?? "", title: self.title ?? "", abstract: self.abstract ?? "", media: self.media.map({$0.map {$0.toDomain()}})!)
     }
 }
 

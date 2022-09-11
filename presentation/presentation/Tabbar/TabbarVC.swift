@@ -8,48 +8,58 @@
 import Foundation
 import UIKit
 
-public class TabbarVC: UITabBarController {
+public class TabbarVC: BaseTabController<HomeViewModel>  {
     public override func viewDidLoad() {
         super.viewDidLoad()
+        let homeVC = router.homeVC()
+        let exploreVC = router.exploreVC()
+        let saveVC = router.saveVC()
+        let profileVC = router.profileVC()
         
-        tabBar.clipsToBounds = false
-        tabBar.layer.cornerRadius = 32
-        tabBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        self.view.backgroundColor = Asset.Colors.backgroundColor.color
+        
+        let homeNav = UINavigationController(rootViewController: homeVC)
+        let exploreNav = UINavigationController(rootViewController: exploreVC)
+        let saveNav = UINavigationController(rootViewController: saveVC)
+        let profileNav = UINavigationController(rootViewController: profileVC)
         
         UITabBar.appearance().barTintColor = Asset.Colors.tabbarColor.color
         tabBar.barStyle = .default
-        tabBar.tintColor = .systemBlue
+        tabBar.tintColor = Asset.Colors.accentColor.color
         tabBar.unselectedItemTintColor = .lightGray
         tabBar.isTranslucent = false
         tabBar.backgroundColor = Asset.Colors.tabbarColor.color
         
         
-        tabBar.layer.masksToBounds = false
-        tabBar.layer.shadowRadius = 2
-        tabBar.layer.shadowColor = UIColor.black.cgColor //Asset.Colors.backgroundColor.color
+        tabBar.clipsToBounds = false
+        tabBar.layer.cornerRadius = 28
+        tabBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
         
-        let vc1 = HomeNavigationVC()
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        tabBar.layer.shadowRadius = 5
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOpacity = 0.1
         
-        vc1.tabBarItem.title = "Home"
-        vc1.tabBarItem.image = Asset.Media.tabbar1.image
+        homeNav.tabBarItem = UITabBarItem(title: "Home",
+                                          image: Asset.Media.tabbar1.image,
+                                          selectedImage: Asset.Media.tabbar1Selected.image)
         
-        let vc2 = MenuVC()
+        exploreNav.tabBarItem = UITabBarItem(title: "Explore",
+                                             image: Asset.Media.tabbar2.image,
+                                             selectedImage: Asset.Media.tabbar2.image)
         
-        vc2.tabBarItem.title = "Menu"
-//        vc2.tabBarItem.image = Asset.Media.tabbar2.image
+        saveNav.tabBarItem = UITabBarItem(title: "Save",
+                                          image: Asset.Media.tabbar3.image,
+                                          selectedImage: Asset.Media.tabbar3Selected.image)
         
-        let vc3 = SearchVC()
+        profileNav.tabBarItem = UITabBarItem(title: "Profile",
+                                             image: Asset.Media.tabbar4.image,
+                                             selectedImage: Asset.Media.tabbar4Selected.image)
         
-        vc3.tabBarItem.title = "Search"
-//        vc3.tabBarItem.image = Asset.Media.tabbar3.image
         
-        let vc4 = ProfileVC()
         
-        vc4.tabBarItem.title = "Profile"
-        vc4.tabBarItem.image = Asset.Media.tabbar4.image
-        
-        self.setViewControllers([vc1, vc2, vc3, vc4], animated: false)
+        self.setViewControllers([homeNav, exploreNav, saveNav, profileNav], animated: false)
         
         self.selectedIndex = 0
     }

@@ -1,30 +1,31 @@
+////
+////  HomeNavigationVC.swift
+////  presentation
+////
+////  Created by Nihad Ismayilov on 06.09.22.
+////
 //
-//  HomeNavigationVC.swift
-//  presentation
+//import Foundation
+//import UIKit
 //
-//  Created by Nihad Ismayilov on 06.09.22.
+//class HomeNavigationVC: UINavigationController, UIGestureRecognizerDelegate {
 //
-
-import Foundation
-import UIKit
-
-class HomeNavigationVC: UINavigationController, UIGestureRecognizerDelegate {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .black
-        
-        let vc = HomeVC()
-        
-        self.viewControllers = [vc]
-        
-        interactivePopGestureRecognizer?.delegate = self
-        interactivePopGestureRecognizer?.isEnabled = true
-        
-//        navigationBar.layer.allowsEdgeAntialiasing = true
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        self.view.backgroundColor = Asset.Colors.backgroundColor.color
+//        
+//        let vc = HomeVC()
+//        
+//        self.viewControllers = [vc]
+//        
+//        interactivePopGestureRecognizer?.delegate = self
+//        interactivePopGestureRecognizer?.isEnabled = true
+//        
+////        navigationBar.layer.allowsEdgeAntialiasing = true
 //        navigationBar.prefersLargeTitles = true
-//        navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        vc.navigationItem.title = "Alarm"
-    }
-    
-}
+//        
+////        navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        vc.navigationItem.title = "Popular News"
+//    }
+//    
+//}

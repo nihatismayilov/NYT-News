@@ -28,12 +28,10 @@ class PopularNewsRemoteDataSource: PopularNewsRemoteDataSourceProtocol {
                 return promise.reject(err)
             }
             
-            switch response.result {
-            case .failure(let error):
-                promise.reject(error)
-            case .success(let popularNews):
-                promise.fulfill(popularNews)
-            }
+            guard let result = response.value else {return}
+            
+            promise.fulfill(result)
+            
         }
         
         return promise

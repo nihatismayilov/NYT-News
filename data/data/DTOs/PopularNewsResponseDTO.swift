@@ -13,15 +13,15 @@ struct PopularNewsResponseDTO: Decodable {
     struct PopularResultsDTO: Decodable {
         let url: String?
         let id: Int?
-        let publishedDate: String?
+        let updateDate: String?
         let category: String?
         let title: String?
         let abstract: String?
-        let media: MediaDTO?
+        let media: [MediaDTO]?
         
         enum CodingKeys: String, CodingKey {
-            case publishedDate = "published_date"
             case url, id, title, abstract, media
+            case updateDate = "updated"
             case category = "section"
         }
     }
