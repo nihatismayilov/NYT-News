@@ -26,7 +26,7 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         let btn = UIButton()
         self.backView.addSubview(btn)
         btn.setImage(Asset.Media.icBack.image, for: .normal)
-//        btn.addTarget(self, action: #selector(onBackTapped), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(onBackTapped), for: .allTouchEvents)
         
         return btn
     }()
@@ -36,6 +36,7 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         self.contentView.addSubview(view)
         view.backgroundColor = Asset.Colors.redColor2.color.withAlphaComponent(0.2)
         
+        
         return view
     }()
     
@@ -43,6 +44,7 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         let btn = UIButton()
         self.shareView.addSubview(btn)
         btn.setImage(Asset.Media.icDownload.image, for: .normal)
+        btn.addTarget(self, action: #selector(onShareTapped), for: .touchUpInside)
         
         return btn
     }()
@@ -80,11 +82,14 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         return view
     }()
     
-    lazy var writtenByView: UIView = {
-       let view = UIView()
+    lazy var writtenByView: GradientView = {
+        let view = GradientView(colors: [
+            Asset.Colors.redColor.color.cgColor,
+            Asset.Colors.redColor.color.withAlphaComponent(0.5).cgColor,
+            ])
         self.detailsView.addSubview(view)
         view.layer.cornerRadius = 12
-        view.backgroundColor = Asset.Colors.redColor.color
+//        view.backgroundColor = Asset.Colors.redColor.color
         
         return view
     }()
@@ -103,14 +108,24 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
         self.setupUI()
-        backButton.addTarget(self, action: #selector(onBackTapped), for: .allTouchEvents)
-        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.isNavigationBarHidden = true
+        
+//        let view = GradientView()
+//        self.contentView.addSubview(view)
+//        view.snp.makeConstraints { make in
+//            make.center.equalTo(self.contentView.snp.center)
+//            make.width.height.equalTo(100)
+//        }
+        
     }
     
     @objc func onBackTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func onShareTapped() {
         self.navigationController?.popViewController(animated: true)
     }
 }
@@ -172,6 +187,13 @@ extension DetailsVC {
             make.left.equalTo(self.detailsView.snp.left).offset(24)
             make.top.equalTo(self.detailsView.snp.top).offset(32)
         }
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = writtenByView.bounds
+//        gradientLayer.colors = [
+//            Asset.Colors.redColor.color.cgColor,
+//            UIColor.white.cgColor,
+//        ]
+//        writtenByView.layer.addSublayer(gradientLayer)
         
         self.writtenByLabel.snp.makeConstraints { make in
             make.top.equalTo(self.writtenByView.snp.top)
