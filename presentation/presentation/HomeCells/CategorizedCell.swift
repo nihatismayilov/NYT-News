@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 import domain
 
 class CategorizedCell: UITableViewCell {
@@ -36,7 +37,7 @@ class CategorizedCell: UITableViewCell {
         self.contentView.addSubview(lbl)
         lbl.textColor = Asset.Colors.textColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        lbl.numberOfLines = 0
+        lbl.numberOfLines = 3
         lbl.text = "New York Times News\nNew York Times News\nNew York Times News"
         
         return lbl
@@ -160,8 +161,8 @@ class CategorizedCell: UITableViewCell {
         }
         
         self.dateLbl.snp.makeConstraints { make in
-            make.right.equalTo(self.contentView.snp.right).offset(-8).priority(.high)
-            make.left.equalTo(self.categoryView.snp.right).offset(8).priority(.low)
+            make.right.equalTo(self.contentView.snp.right).offset(-8)
+            make.left.equalTo(self.categoryView.snp.right).offset(8)
             make.bottom.equalTo(self.thumbImage.snp.bottom).offset(-4)
         }
     }

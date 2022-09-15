@@ -26,12 +26,18 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal enum Colors {
     internal static let accentColor = ColorAsset(name: "AccentColor")
+    internal static let backButtonColor = ColorAsset(name: "backButtonColor")
     internal static let backgroundColor = ColorAsset(name: "backgroundColor")
+    internal static let categoryColor = ColorAsset(name: "categoryColor")
+    internal static let dateColor = ColorAsset(name: "dateColor")
     internal static let redColor = ColorAsset(name: "redColor")
+    internal static let redColor2 = ColorAsset(name: "redColor2")
+    internal static let searchBackgrounfColor = ColorAsset(name: "searchBackgrounfColor")
     internal static let tabbarColor = ColorAsset(name: "tabbarColor")
     internal static let textColor = ColorAsset(name: "textColor")
   }
   internal enum Media {
+    internal static let _1 = ImageAsset(name: "1")
     internal static let girlCampingBesideACar1280Ã800 = ImageAsset(name: "girl-camping-beside-a-car-1280Ã800")
     internal static let newsLogo = ImageAsset(name: "newsLogo")
     internal static let tabbar1 = ImageAsset(name: "tabbar1")
@@ -41,6 +47,9 @@ internal enum Asset {
     internal static let tabbar3Selected = ImageAsset(name: "tabbar3Selected")
     internal static let tabbar4 = ImageAsset(name: "tabbar4")
     internal static let tabbar4Selected = ImageAsset(name: "tabbar4Selected")
+    internal static let icBack = ImageAsset(name: "ic_back")
+    internal static let icDownload = ImageAsset(name: "ic_download")
+    internal static let profileImage = ImageAsset(name: "profileImage")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

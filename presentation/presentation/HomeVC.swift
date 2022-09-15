@@ -14,6 +14,8 @@ public class HomeVC: BaseVC<HomeViewModel> {
     
     // MARK: - Variables
     var breakingNews = [PopularNews.PopularResults]()
+    var allCategorizedNews = [CategorizedNews.Results]()
+    var filteredCategorizedNews = [CategorizedNews.Results]()
     
     // MARK: - UI Components
     
@@ -22,7 +24,7 @@ public class HomeVC: BaseVC<HomeViewModel> {
         self.view.addSubview(view)
         view.delegate = self
         view.dataSource = self
-        view.allowsSelection = false
+//        view.allowsSelection = false
         view.separatorStyle = .none
         view.showsVerticalScrollIndicator = false
         
@@ -35,16 +37,35 @@ public class HomeVC: BaseVC<HomeViewModel> {
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
         self.setupUI()
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.Media.newsLogo.image.withRenderingMode(.alwaysOriginal),
-                                                                style: .done,
-                                                                target: self,
-                                                                action: #selector(onLogoTapped))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: Asset.Media.newsLogo.image.withRenderingMode(.alwaysOriginal),
+            style: .done,
+            target: self,
+            action: #selector(onLogoTapped))
         
-        print(self.vm?.getPopularNews())
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: Asset.Media.profileImage.image.withRenderingMode(.alwaysOriginal),           
+            style: .plain,
+            target: self,
+            action: #selector(onProfileTapped))
+        
         self.vm?.getPopularNews().then({ news in
             if let results = news.results {
                 self.breakingNews = results
                 self.tableView.reloadData()
+            }
+        })
+        
+        self.vm?.getCategorizedNews(with: "world").then({ news in
+            print("WWW: \(news)")
+            if let news = news.results {
+//                news.forEach { oneNews in
+//                    if oneNews.category == "science" {
+                        self.allCategorizedNews = news
+                        self.filteredCategorizedNews = news
+                        self.tableView.reloadData()
+//                    }
+//                }
             }
         })
     }
@@ -52,45 +73,73 @@ public class HomeVC: BaseVC<HomeViewModel> {
     
     @objc func onLogoTapped() {
         tableView.setContentOffset(.zero, animated: true)
-        
+    }
+    
+    @objc func onProfileTapped() {
+        tabBarController?.selectedIndex = 3
     }
 }
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 3
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 1
+        case 2:
+            return self.filteredCategorizedNews.count
+        default:
+            return 1
+        }
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
+//        cell.contentView.layoutIfNeeded()
         
-        
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
             tableView.register(HeaderCell.self, forCellReuseIdentifier: HeaderCell.identifier)
             let headerCell = tableView.dequeueReusableCell(withIdentifier: HeaderCell.identifier) as! HeaderCell
             headerCell.breakingNews = self.breakingNews
             headerCell.collectionView.reloadData()
             
+            headerCell.rowSelectedCompletion = {
+                self.navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
+            }
+            
             cell = headerCell
         case 1:
-//            tableView.register(CategoriesCell.self, forCellReuseIdentifier: self.categoryCell)
-//            let categoriesCell = tableView.dequeueReusableCell(withIdentifier: self.categoryCell) as! CategoriesCell
-            print("")
-//            cell = categoriesCell
+            tableView.register(CategoriesCell.self, forCellReuseIdentifier: CategoriesCell.identifier)
+            let categoriesCell = tableView.dequeueReusableCell(withIdentifier: CategoriesCell.identifier, for: indexPath) as! CategoriesCell
+            categoriesCell.contentView.layoutIfNeeded()
+            
+            categoriesCell.selectCategoryCompletion = { index in
+                
+                self.vm?.getCategorizedNews(with: CategoriesMenu.items[index].title).then({ news in
+                    print(CategoriesMenu.items[index].title)
+                    if let news = news.results {
+                        self.allCategorizedNews = news
+                        self.filteredCategorizedNews = news
+                        self.tableView.reloadData()
+                    }
+                })
+            }
+            
+            cell = categoriesCell
         case 2:
-//            tableView.allowsSelection = true
-//            tableView.register(TutorialsCell.self, forCellReuseIdentifier: self.tutorialCell)
-//            let tutorialCell = tableView.dequeueReusableCell(withIdentifier: self.tutorialCell) as! TutorialsCell
-//
-//            tutorialCell.completion = {
-//                let videoVC = VideoVC()
-//                self.navigationController?.pushViewController(videoVC, animated: true)
-//            }
+            tableView.register(CategorizedCell.self, forCellReuseIdentifier: CategorizedCell.identifier)
+            let categorizedCell = tableView.dequeueReusableCell(withIdentifier: CategorizedCell.identifier) as! CategorizedCell
+            categorizedCell.contentView.layoutIfNeeded()
             
-            print("")
+            categorizedCell.setupCellWith(categorizedNews: self.filteredCategorizedNews[indexPath.row])
             
-//            cell = tutorialCell
+            cell = categorizedCell
         default:
             break
         }
@@ -98,33 +147,34 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        case 1:
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        case 2:
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
+            print("")
+        default:
+            break
+        }
+    }
+    
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
             return 480
         case 1:
-            return 200
+            return 64
+        case 2:
+            return 128
         default:
-            return 300
+            return 128
         }
     }
 }
-
-//extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return self.breakingNews.count
-//    }
-//    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BreakingNewsCell.identifier, for: indexPath) as! BreakingNewsCell
-//
-//        cell.setupCellWith(breakingNews: self.breakingNews[indexPath.row])
-//
-//        return cell
-//    }
-////    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////        return CGSize(width: (self.view.frame.size.width / 1.2), height: 320)
-////    }
-//}
 
 extension HomeVC {
     func setupUI() {

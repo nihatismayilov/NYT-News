@@ -18,11 +18,13 @@ struct PopularNewsResponseDTO: Decodable {
         let title: String?
         let abstract: String?
         let media: [MediaDTO]?
+        let byline: String?
         
         enum CodingKeys: String, CodingKey {
             case url, id, title, abstract, media
             case updateDate = "updated"
             case category = "section"
+            case byline
         }
     }
 }

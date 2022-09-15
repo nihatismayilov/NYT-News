@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import domain
+import Promises
+
+public class DetailsViewModel {
+    
+    public init() {
+    }
+    
+}

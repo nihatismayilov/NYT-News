@@ -11,13 +11,21 @@ import Promises
 
 public class HomeViewModel {
 
-    private let getPopularnewsUseCase: GetPopularNewsUseCase
-    public init(getPopularnewsUseCase: GetPopularNewsUseCase) {
-        self.getPopularnewsUseCase = getPopularnewsUseCase
+    private let getPopularNewsUseCase: GetPopularNewsUseCase
+    private let getCategorizedNewsUseCase: GetGategorizedNewsUseCase
+    
+    public init(getPopularnewsUseCase: GetPopularNewsUseCase,
+                getCategorizedNewsUseCase: GetGategorizedNewsUseCase) {
+        self.getPopularNewsUseCase = getPopularnewsUseCase
+        self.getCategorizedNewsUseCase = getCategorizedNewsUseCase
     }
     
     func getPopularNews() -> Promise<PopularNews> {
-        return getPopularnewsUseCase.execute()
+        return getPopularNewsUseCase.execute()
+    }
+    
+    func getCategorizedNews(with category: String) -> Promise<CategorizedNews> {
+        return getCategorizedNewsUseCase.execute(with: category)
     }
     
 }

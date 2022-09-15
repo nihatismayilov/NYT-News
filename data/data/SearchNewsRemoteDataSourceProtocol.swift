@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Promises
+
+protocol SearchNewsRemoteDataSourceProtocol {
+    func getSearchNews(with query: String) -> Promise<SearchNewsResponseDTO>
+}

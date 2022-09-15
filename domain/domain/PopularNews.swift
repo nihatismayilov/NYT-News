@@ -22,6 +22,7 @@ public struct PopularNews {
         public let title: String?
         public let abstract: String?
         public let media: [Media]?
+        public let byline: String?
         
         public init(url: String,
                     id: Int,
@@ -29,7 +30,8 @@ public struct PopularNews {
                     category: String,
                     title: String,
                     abstract: String,
-                    media: [PopularNews.PopularResults.Media]
+                    media: [PopularNews.PopularResults.Media],
+                    byline: String
         ) {
             self.url = url
             self.id = id
@@ -38,6 +40,7 @@ public struct PopularNews {
             self.title = title
             self.abstract = abstract
             self.media = media
+            self.byline = byline
         }
         
         // MARK: - Media

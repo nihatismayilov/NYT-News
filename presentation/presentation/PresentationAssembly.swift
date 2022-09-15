@@ -15,7 +15,11 @@ public class PresentationAssembly: Assembly {
     
     public func assemble(container: Container) {
         container.register(HomeViewModel.self) { r in
-            return HomeViewModel(getPopularnewsUseCase: r.resolve(GetPopularNewsUseCase.self)!)
+            return HomeViewModel(getPopularnewsUseCase: r.resolve(GetPopularNewsUseCase.self)!, getCategorizedNewsUseCase: r.resolve(GetGategorizedNewsUseCase.self)!)
+        }
+        
+        container.register(ExploreViewModel.self) { r in
+            return ExploreViewModel(getSearchNewsUseCase: r.resolve(GetSearchNewsUseCase.self)!)
         }
     }
 }

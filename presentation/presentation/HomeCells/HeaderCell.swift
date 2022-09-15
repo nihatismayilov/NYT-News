@@ -14,6 +14,8 @@ class HeaderCell: UITableViewCell {
     static let identifier = "headerCell"
     var breakingNews = [PopularNews.PopularResults]()
     
+    var rowSelectedCompletion: (() -> Void)?
+    
     // MARK: - UI Components
     
     private lazy var titleLabel: UILabel = {
@@ -62,7 +64,7 @@ class HeaderCell: UITableViewCell {
     private func setupUI() {
         self.titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.contentView.snp.top).offset(16)
-            make.left.equalTo(self.contentView.snp.left).offset(24)
+            make.left.equalTo(self.contentView.snp.left).offset(16)
         }
         
         self.collectionView.snp.makeConstraints { make in
@@ -87,5 +89,10 @@ extension HeaderCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 280, height: 400)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
+        self.rowSelectedCompletion?()
     }
 }

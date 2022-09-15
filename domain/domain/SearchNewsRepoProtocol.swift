@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Promises
+
+public protocol SearchNewsRepoProtocol {
+    func getSearchNews(with query: String) -> Promise<SearchNews>
+}

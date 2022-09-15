@@ -3,4 +3,117 @@
    uuid = "F561FBD1-72B3-4DB6-B62F-160ED4AE186F"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D27C2BB-5CA7-4CB4-91EC-FEA6B643ED9D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "presentation/presentation/HomeVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2D27C2BB-5CA7-4CB4-91EC-FEA6B643ED9D - bc14605312f58a72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (domain.CategorizedNews) -&gt; () in closure #2 (Swift.Int) -&gt; () in presentation.HomeVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "2D27C2BB-5CA7-4CB4-91EC-FEA6B643ED9D - d5a9ea3822f0fdc1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Int) -&gt; () in presentation.HomeVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "2D27C2BB-5CA7-4CB4-91EC-FEA6B643ED9D - bc14605312f58a72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (domain.CategorizedNews) -&gt; () in closure #2 (Swift.Int) -&gt; () in presentation.HomeVC.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "634BE574-6C28-43F7-9D71-A3695EE9CB8D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "presentation/presentation/HomeCells/CategoriesCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "634BE574-6C28-43F7-9D71-A3695EE9CB8D - 5cb5a22694935a15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "presentation.CategoriesCell.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "844">
+               </Location>
+               <Location
+                  uuid = "634BE574-6C28-43F7-9D71-A3695EE9CB8D - b67af2e65480cb0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in presentation.CategoriesCell.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "284">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

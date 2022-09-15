@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Promises
+
+public protocol CategorizedNewsRepoProtocol {
+    func getCategorizedNews(with category: String) -> Promise<CategorizedNews>
+}

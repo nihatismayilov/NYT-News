@@ -11,11 +11,12 @@ import domain
 import UIKit
 
 public protocol RouterProtocol {
+    func tabbarVC() -> TabbarVC
     func homeVC() -> HomeVC
     func exploreVC() -> ExploreVC
     func saveVC() -> SaveVC
     func profileVC() -> ProfileVC
-    func tabbarVC() -> TabbarVC
+    func detailsVC() -> DetailsVC
 }
 public class Router: RouterProtocol {
     private let resolver: Resolver
@@ -41,7 +42,7 @@ public class Router: RouterProtocol {
     
     public func exploreVC() -> ExploreVC {
         let vc = ExploreVC()
-        vc.vm = resolver.resolve(HomeViewModel.self)
+        vc.vm = resolver.resolve(ExploreViewModel.self)
         vc.router = self
         return vc
     }
@@ -56,6 +57,13 @@ public class Router: RouterProtocol {
     public func profileVC() -> ProfileVC {
         let vc = ProfileVC()
         vc.vm = resolver.resolve(HomeViewModel.self)
+        vc.router = self
+        return vc
+    }
+    
+    public func detailsVC() -> DetailsVC {
+        let vc = DetailsVC()
+        vc.vm = resolver.resolve(DetailsViewModel.self)
         vc.router = self
         return vc
     }

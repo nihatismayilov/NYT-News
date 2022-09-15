@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import Promises
+
+public class GetSearchNewsUseCase {
+    let repo: SearchNewsRepoProtocol
+    
+    public init(repo: SearchNewsRepoProtocol) {
+        self.repo = repo
+    }
+    
+    public func execute(with query: String) -> Promise<SearchNews> {
+        return repo.getSearchNews(with: query)
+    }
+}

@@ -15,5 +15,13 @@ public class DomainAssembly: Assembly {
         container.register(GetPopularNewsUseCase.self) { r in
             GetPopularNewsUseCase.init(repo: r.resolve(PopularNewsRepoProtocol.self)!)
         }
+        
+        container.register(GetGategorizedNewsUseCase.self) { r in
+            GetGategorizedNewsUseCase.init(repo: r.resolve(CategorizedNewsRepoProtocol.self)!)
+        }
+        
+        container.register(GetSearchNewsUseCase.self) { r in
+            GetSearchNewsUseCase.init(repo: r.resolve(SearchNewsRepoProtocol.self)!)
+        }
     }
 }

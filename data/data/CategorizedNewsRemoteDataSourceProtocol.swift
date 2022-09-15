@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Promises
+
+protocol CategorizedNewsRemoteDataSourceProtocol {
+    func getCategorizedNews(with category: String) -> Promise<CategorizedNewsResponseDTO>
+}
