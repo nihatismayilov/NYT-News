@@ -13,7 +13,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
     
     static let identifier = "BreakingNewsCell"
     
-    var thumbImage: UIImageView = {
+    lazy var thumbImage: UIImageView = {
         let image = UIImageView()
         
         image.contentMode = .scaleAspectFill
@@ -22,7 +22,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         return image
     }()
     
-    var blurBackground: UIView = {
+    lazy var blurBackground: UIView = {
         let view = UIView()
         
         view.backgroundColor = .black.withAlphaComponent(0.5)
@@ -30,7 +30,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         return view
     }()
     
-    var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let lbl = UILabel()
         
         lbl.textColor = .white
@@ -41,7 +41,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         return lbl
     }()
     
-    var descLabel: UILabel = {
+    lazy var descLabel: UILabel = {
         let lbl = UILabel()
         
         lbl.textColor = UIColor.init(white: 0.92, alpha: 1.0)
@@ -52,7 +52,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         return lbl
     }()
     
-    var categorylabel: UILabel = {
+    lazy var categorylabel: UILabel = {
         let lbl = UILabel()
         
         lbl.textColor = .white
@@ -63,7 +63,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         return lbl
     }()
     
-    var publishedDateLabel: UILabel = {
+    lazy var publishedDateLabel: UILabel = {
         let lbl = UILabel()
         
         lbl.textColor = UIColor.init(white: 0.92, alpha: 1.0)

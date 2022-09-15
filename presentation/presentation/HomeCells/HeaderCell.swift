@@ -10,10 +10,11 @@ import SnapKit
 import domain
 
 class HeaderCell: UITableViewCell {
-    
+    // MARK: - Variables
     static let identifier = "headerCell"
     var breakingNews = [PopularNews.PopularResults]()
     
+    // MARK: - UI Components
     
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel()
