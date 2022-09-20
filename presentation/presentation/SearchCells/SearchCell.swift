@@ -87,10 +87,11 @@ class SearchCell: UITableViewCell {
         contentView.layer.shadowOpacity = 0.1
         
         self.contentView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top).offset(4)
-            make.bottom.equalTo(self.snp.bottom).offset(-4)
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+//            make.top.equalTo(self.snp.top).offset(4)
+//            make.bottom.equalTo(self.snp.bottom).offset(-4)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(128)
         }
         setupUI()
     }
@@ -99,23 +100,25 @@ class SearchCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCellWith(seachNews: SearchNews.Response.Doc) {
-        var imageUrl: URL?
-        if let url = seachNews.multimedia?.last?.url {
-            imageUrl = URL.init(string: "https://static01.nyt.com/\(url)")
-        }
-        self.thumbImage.kf.setImage(with: imageUrl, placeholder: UIImage()) { result in
-            switch result {
-            case .success(let imageResult):
-                self.thumbImage.image = imageResult.image.withRenderingMode(.alwaysOriginal)
-            case .failure(let err):
-                print(err)
+    func setupCellWith(searchNews: SearchNews.Response.Doc) {
+        if searchNews.headline?.main != "" {
+            var imageUrl: URL?
+            if let url = searchNews.multimedia?.last?.url {
+                imageUrl = URL.init(string: "https://static01.nyt.com/\(url)")
             }
+            self.thumbImage.kf.setImage(with: imageUrl, placeholder: UIImage()) { result in
+                switch result {
+                case .success(let imageResult):
+                    self.thumbImage.image = imageResult.image.withRenderingMode(.alwaysOriginal)
+                case .failure(let err):
+                    print(err)
+                }
+            }
+            
+            self.titleLbl.text = searchNews.headline?.main
+            self.categoryLbl.text = searchNews.category
+            self.dateLbl.text = searchNews.pubDate?.toDateL?.toStringWithTime.getFormattedDateDayMonthYearHour()
         }
-        
-        self.titleLbl.text = seachNews.headline?.main
-        self.categoryLbl.text = seachNews.category
-        self.dateLbl.text = seachNews.pubDate
     }
     
     private func setupUI() {
@@ -123,10 +126,10 @@ class SearchCell: UITableViewCell {
         thumbView.clipsToBounds = true
         thumbView.layer.cornerRadius = 12
         self.thumbView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left)
-            make.top.equalTo(self.contentView.snp.top)
-            make.bottom.equalTo(self.contentView.snp.bottom)
+            make.height.equalTo(120)
             make.width.equalTo(120)
+            make.centerY.equalTo(self.contentView.snp.centerY)
+            make.left.equalTo(self.contentView.snp.left).offset(24)
         }
         
         thumbImage.layer.cornerRadius = 12

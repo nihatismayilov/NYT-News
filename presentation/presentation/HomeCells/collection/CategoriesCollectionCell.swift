@@ -55,8 +55,9 @@ class CategoriesCollectionCell: UICollectionViewCell {
         contentView.snp.makeConstraints { make in
             make.left.equalTo(self.snp.left)
             make.right.equalTo(self.snp.right)
-            make.top.equalTo(self.snp.top)
-            make.bottom.equalTo(self.snp.bottom)
+            make.height.equalTo(48)
+//            make.top.equalTo(self.snp.top)
+//            make.bottom.equalTo(self.snp.bottom)
 //            make.width.equalTo(80)
 //            make.width.lessThanOrEqualTo(112)
         }
@@ -79,8 +80,8 @@ class CategoriesCollectionCell: UICollectionViewCell {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onSelect))
         self.categoryView.addGestureRecognizer(tapGesture)
         self.categoryView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left).offset(8)
-            make.right.equalTo(self.contentView.snp.right).offset(-8)
+            make.left.equalTo(self.contentView.snp.left)
+            make.right.equalTo(self.contentView.snp.right)
             make.top.equalTo(self.contentView.snp.top)
             make.bottom.equalTo(self.contentView.snp.bottom)
         }

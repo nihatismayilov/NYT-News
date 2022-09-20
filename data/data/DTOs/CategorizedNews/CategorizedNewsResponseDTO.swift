@@ -17,6 +17,7 @@ struct CategorizedNewsResponseDTO: Decodable {
         let byline: String?
         let updatedDate, createdDate, publishedDate: String?
         let multimedia: [Multimedia]?
+        let keywords: [String]?
 
         enum CodingKeys: String, CodingKey {
             case category = "section"
@@ -26,6 +27,7 @@ struct CategorizedNewsResponseDTO: Decodable {
             case createdDate = "created_date"
             case publishedDate = "published_date"
             case multimedia
+            case keywords = "des_facet"
         }
     }
 }

@@ -28,7 +28,9 @@ class SearchNewsRemoteDataSource: SearchNewsRemoteDataSourceProtocol {
                 return promise.reject(err)
             }
             
-            guard let result = response.value else {return}
+            guard let result = response.value else {
+                return promise.reject(response.error!)
+            }
             
             promise.fulfill(result)
         }

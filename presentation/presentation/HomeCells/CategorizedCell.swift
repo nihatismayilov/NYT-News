@@ -38,7 +38,7 @@ class CategorizedCell: UITableViewCell {
         lbl.textColor = Asset.Colors.textColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         lbl.numberOfLines = 3
-        lbl.text = "New York Times News\nNew York Times News\nNew York Times News"
+        lbl.text = "N/A"
         
         return lbl
     }()
@@ -57,7 +57,7 @@ class CategorizedCell: UITableViewCell {
         lbl.textColor = Asset.Colors.categoryColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 14)
         lbl.numberOfLines = 0
-        lbl.text = "Tech"
+        lbl.text = "N/A"
         
         return lbl
     }()
@@ -69,7 +69,7 @@ class CategorizedCell: UITableViewCell {
         lbl.textColor = Asset.Colors.dateColor.color//UIColor.init(white: 0.79, alpha: 1.0)
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 12)
         lbl.numberOfLines = 0
-        lbl.text = "24.09.2022"
+        lbl.text = "N/A"
         
         return lbl
     }()
@@ -87,10 +87,11 @@ class CategorizedCell: UITableViewCell {
         contentView.layer.shadowOpacity = 0.1
         
         self.contentView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top).offset(4)
-            make.bottom.equalTo(self.snp.bottom).offset(-4)
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+//            make.top.equalTo(self.snp.top).offset(4)
+//            make.bottom.equalTo(self.snp.bottom).offset(-4)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(128)
         }
         setupUI()
     }
@@ -100,22 +101,32 @@ class CategorizedCell: UITableViewCell {
     }
     
     func setupCellWith(categorizedNews: CategorizedNews.Results) {
-        var imageUrl: URL?
-        if let url = categorizedNews.multimedia?.last?.url {
-            imageUrl = URL.init(string: "\(url)")
-        }
-        self.thumbImage.kf.setImage(with: imageUrl, placeholder: UIImage()) { result in
-            switch result {
-            case .success(let imageResult):
-                self.thumbImage.image = imageResult.image.withRenderingMode(.alwaysOriginal)
-            case .failure(let err):
-                print(err)
+//        if categorizedNews.title != "" {
+            var imageUrl: URL?
+            if let url = categorizedNews.multimedia?.last?.url {
+                imageUrl = URL.init(string: "\(url)")
             }
+            self.thumbImage.kf.setImage(with: imageUrl, placeholder: UIImage()) { result in
+                switch result {
+                case .success(let imageResult):
+                    self.thumbImage.image = imageResult.image.withRenderingMode(.alwaysOriginal)
+                case .failure(let err):
+                    print(err)
+                }
+            }
+        if categorizedNews.title != "" {
+            self.titleLbl.text = categorizedNews.title
+        } else {
+            self.titleLbl.text = "N/A"
+        }
+        if categorizedNews.category != "" {
+            self.categoryLbl.text = categorizedNews.category
+        } else {
+            self.categoryLbl.text = "n/a"
         }
         
-        self.titleLbl.text = categorizedNews.title
-        self.categoryLbl.text = categorizedNews.category
-        self.dateLbl.text = categorizedNews.publishedDate
+            self.dateLbl.text = categorizedNews.publishedDate?.toDateM?.toStringWithTime.getFormattedDateDayMonthYearHour()
+//        }
     }
     
     private func setupUI() {
@@ -123,10 +134,10 @@ class CategorizedCell: UITableViewCell {
         thumbView.clipsToBounds = true
         thumbView.layer.cornerRadius = 12
         self.thumbView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left)
-            make.top.equalTo(self.contentView.snp.top)
-            make.bottom.equalTo(self.contentView.snp.bottom)
+            make.height.equalTo(120)
             make.width.equalTo(120)
+            make.centerY.equalTo(self.contentView.snp.centerY)
+            make.left.equalTo(self.contentView.snp.left).offset(24)
         }
         
         thumbImage.layer.cornerRadius = 12

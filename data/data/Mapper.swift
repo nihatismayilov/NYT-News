@@ -23,7 +23,7 @@ extension PopularNewsResponseDTO.PopularResultsDTO.MediaDTO {
 
 extension PopularNewsResponseDTO.PopularResultsDTO {
     func toDomain() -> PopularNews.PopularResults {
-        return PopularNews.PopularResults.init(url: self.url ?? "", id: self.id ?? 0, updateDate: self.updateDate ?? "", category: self.category ?? "", title: self.title ?? "", abstract: self.abstract ?? "", media: self.media.map({$0.map {$0.toDomain()}})!, byline: self.byline ?? "")
+        return PopularNews.PopularResults.init(url: self.url ?? "", id: self.id ?? 0, updateDate: self.updateDate ?? "", category: self.category ?? "", title: self.title ?? "", abstract: self.abstract ?? "", keywords: self.keywords ?? [], media: self.media.map({$0.map {$0.toDomain()}})!, byline: self.byline ?? "")
     }
 }
 
@@ -43,7 +43,7 @@ extension CategorizedNewsResponseDTO.ResultsDTO.Multimedia {
 
 extension CategorizedNewsResponseDTO.ResultsDTO {
     func toDomain() -> CategorizedNews.Results {
-        return CategorizedNews.Results(category: self.category ?? "", subCategory: self.subCategory ?? "", title: self.title ?? "", abstract: self.abstract ?? "", url: self.url ?? "", byline: self.byline ?? "", updatedDate: self.updatedDate ?? "", createdDate: self.createdDate ?? "", publishedDate: self.publishedDate ?? "", multimedia: self.multimedia.map({$0.map {$0.toDomain()}}) ?? [CategorizedNews.Results.Multimedia(url: "")])
+        return CategorizedNews.Results(category: self.category ?? "", subCategory: self.subCategory ?? "", title: self.title ?? "", abstract: self.abstract ?? "", url: self.url ?? "", byline: self.byline ?? "", updatedDate: self.updatedDate ?? "", createdDate: self.createdDate ?? "", publishedDate: self.publishedDate ?? "", multimedia: self.multimedia.map({$0.map {$0.toDomain()}}) ?? [CategorizedNews.Results.Multimedia(url: "")], keywords: self.keywords ?? [])
     }
 }
 
@@ -54,6 +54,12 @@ extension CategorizedNewsResponseDTO {
 }
 
 // MARK: - SearchNews
+
+extension SearchNewsResponseDTO.Response.Doc.Keyword {
+    func toDomain() -> SearchNews.Response.Doc.Keyword {
+        return SearchNews.Response.Doc.Keyword(keyword: self.keyword ?? "")
+    }
+}
 
 extension SearchNewsResponseDTO.Response.Doc.Byline {
     func toDomain() -> SearchNews.Response.Doc.Byline {
@@ -75,7 +81,7 @@ extension SearchNewsResponseDTO.Response.Doc.Multimedia {
 
 extension SearchNewsResponseDTO.Response.Doc {
     func toDomain() -> SearchNews.Response.Doc {
-        return SearchNews.Response.Doc(abstract: self.abstract ?? "", webURL: self.webURL ?? "", multimedia: self.multimedia.map({$0.map {$0.toDomain()}})!, headline: self.headline!.toDomain(), pubDate: self.pubDate ?? "", category: self.category ?? "", subCategory: self.subCategory ?? "", byline: self.byline!.toDomain(), id: self.id ?? "")
+        return SearchNews.Response.Doc(abstract: self.abstract ?? "", webURL: self.webURL ?? "", multimedia: self.multimedia.map({$0.map {$0.toDomain()}})!, headline: self.headline!.toDomain(), keywords: self.keywords.map({$0.map{$0.toDomain()}})!, pubDate: self.pubDate ?? "", category: self.category ?? "", subCategory: self.subCategory ?? "", byline: self.byline!.toDomain(), id: self.id ?? "")
     }
 }
 
@@ -87,6 +93,6 @@ extension SearchNewsResponseDTO.Response {
 
 extension SearchNewsResponseDTO {
     func toDomain() -> SearchNews {
-        return SearchNews.init(response: self.response!.toDomain())
+        return SearchNews.init(response: (self.response?.toDomain()) ?? SearchNews.Response(docs: []))
     }
 }

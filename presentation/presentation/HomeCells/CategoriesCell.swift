@@ -37,8 +37,8 @@ class CategoriesCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top)
-            make.left.equalToSuperview().offset(16)
+//            make.top.equalTo(self.snp.top)
+            make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(64)
         }

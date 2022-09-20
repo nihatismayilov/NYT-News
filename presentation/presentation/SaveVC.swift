@@ -24,15 +24,6 @@ public class SaveVC: BaseVC<HomeViewModel> {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
-        
-        
-//        animationView.backgroundColor = .red
-//        animationView.snp.makeConstraints { make in
-//            make.left.equalTo(self.view.snp.left)
-//            make.right.equalTo(self.view.snp.right)
-//            make.centerY.equalTo(self.view.snp.centerY)
-//            make.height.equalTo(300)
-//        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {

@@ -22,6 +22,7 @@ extension SearchNewsResponseDTO.Response {
         let webURL: String?
         let multimedia: [Multimedia]?
         let headline: Headline?
+        let keywords: [Keyword]?
         let pubDate: String?
         let category: String?
         let subCategory: String?
@@ -31,7 +32,7 @@ extension SearchNewsResponseDTO.Response {
         enum CodingKeys: String, CodingKey {
             case abstract
             case webURL = "web_url"
-            case multimedia, headline
+            case multimedia, headline, keywords
             case pubDate = "pub_date"
             case category = "section_name"
             case subCategory = "subsection_name"
@@ -58,5 +59,13 @@ extension SearchNewsResponseDTO.Response.Doc {
     
     struct Byline: Decodable {
         let original: String?
+    }
+    
+    struct Keyword: Decodable {
+        let keyword: String?
+        
+        enum CodinKeys: String, CodingKey {
+            case keyword = "value"
+        }
     }
 }

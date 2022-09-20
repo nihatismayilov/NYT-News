@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = Router(resolver: assembler.resolver).tabbarVC()
+        window?.rootViewController = Router(resolver: assembler.resolver).splashScreenVC()
         
         return true
     }

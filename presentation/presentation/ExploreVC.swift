@@ -77,9 +77,10 @@ extension ExploreVC: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
-        
-        cell.setupCellWith(seachNews: self.searchedNews[indexPath.row])
-        
+        if let news = self.searchedNews as? [SearchNews.Response.Doc] {
+            cell.setupCellWith(searchNews: self.searchedNews[indexPath.row])
+        }
+                
         return cell
     }
     
@@ -103,6 +104,7 @@ extension ExploreVC: UISearchBarDelegate {
     
     @objc func searchRequestSent() {
         self.searchedNews.removeAll()
+        self.addActivity(frame: (self.view.frame.standardized))
         let searchText = self.searchedText
         print("Searching for \(searchText) actually fired!")
         
@@ -112,10 +114,12 @@ extension ExploreVC: UISearchBarDelegate {
             print("SSS: \(news)")
             
             if let docs = news.response?.docs {
+                print("kkk \(docs.first?.keywords)")
                 self.searchTableView.isHidden = false
                 self.animationView.isHidden = true
                 self.searchedNews = docs
                 self.searchTableView.reloadData()
+                self.removeActivity()
             }
         })
         

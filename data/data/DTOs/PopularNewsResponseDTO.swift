@@ -17,6 +17,7 @@ struct PopularNewsResponseDTO: Decodable {
         let category: String?
         let title: String?
         let abstract: String?
+        let keywords: [String]?
         let media: [MediaDTO]?
         let byline: String?
         
@@ -24,6 +25,7 @@ struct PopularNewsResponseDTO: Decodable {
             case url, id, title, abstract, media
             case updateDate = "updated"
             case category = "section"
+            case keywords = "des_facet"
             case byline
         }
     }

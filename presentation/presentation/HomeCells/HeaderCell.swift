@@ -14,7 +14,7 @@ class HeaderCell: UITableViewCell {
     static let identifier = "headerCell"
     var breakingNews = [PopularNews.PopularResults]()
     
-    var rowSelectedCompletion: (() -> Void)?
+    var rowSelectedCompletion: ((_ index: Int) -> Void)?
     
     // MARK: - UI Components
     
@@ -93,6 +93,7 @@ extension HeaderCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        self.navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
-        self.rowSelectedCompletion?()
+        self.rowSelectedCompletion?(indexPath.row)
+        
     }
 }

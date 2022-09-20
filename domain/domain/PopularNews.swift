@@ -21,6 +21,7 @@ public struct PopularNews {
         public let category: String?
         public let title: String?
         public let abstract: String?
+        public let keywords: [String]?
         public let media: [Media]?
         public let byline: String?
         
@@ -30,6 +31,7 @@ public struct PopularNews {
                     category: String,
                     title: String,
                     abstract: String,
+                    keywords: [String],
                     media: [PopularNews.PopularResults.Media],
                     byline: String
         ) {
@@ -39,6 +41,7 @@ public struct PopularNews {
             self.category = category
             self.title = title
             self.abstract = abstract
+            self.keywords = keywords
             self.media = media
             self.byline = byline
         }

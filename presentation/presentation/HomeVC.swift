@@ -36,6 +36,8 @@ public class HomeVC: BaseVC<HomeViewModel> {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
         self.setupUI()
+        self.tableView.isHidden = true
+        self.addActivity(frame: self.view.frame)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: Asset.Media.newsLogo.image.withRenderingMode(.alwaysOriginal),
@@ -49,25 +51,26 @@ public class HomeVC: BaseVC<HomeViewModel> {
             target: self,
             action: #selector(onProfileTapped))
         
-        self.vm?.getPopularNews().then({ news in
-            if let results = news.results {
-                self.breakingNews = results
+        self.vm?.getCategorizedNews(with: "world").then({ news in
+            if let news = news.results {
+                self.allCategorizedNews = news
+                self.filteredCategorizedNews = news
                 self.tableView.reloadData()
             }
+            self.vm?.getPopularNews().then({ news in
+                if let results = news.results {
+                    self.breakingNews = results
+                    self.tableView.reloadData()
+                    self.tableView.isHidden = false
+                    self.removeActivity()
+                }
+            })
         })
-        
-        self.vm?.getCategorizedNews(with: "world").then({ news in
-            print("WWW: \(news)")
-            if let news = news.results {
-//                news.forEach { oneNews in
-//                    if oneNews.category == "science" {
-                        self.allCategorizedNews = news
-                        self.filteredCategorizedNews = news
-                        self.tableView.reloadData()
-//                    }
-//                }
-            }
-        })
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
     // MARK: - Funstions
     
@@ -109,8 +112,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             headerCell.breakingNews = self.breakingNews
             headerCell.collectionView.reloadData()
             
-            headerCell.rowSelectedCompletion = {
-                self.navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
+            headerCell.rowSelectedCompletion = { index in
+                let vc = self.router?.detailsVC(details: DetailsModel(image: self.breakingNews[index].media?.first?.mediaMetaData?.last?.url, title: self.breakingNews[index].title, description: self.breakingNews[index].abstract, writtenBy: self.breakingNews[index].byline, category: self.breakingNews[index].category, webUrl: self.breakingNews[index].url, keywords: self.breakingNews[index].keywords, id: self.breakingNews[index].id))
+                
+                self.navigationController?.pushViewController(vc!, animated: true)
             }
             
             cell = headerCell
@@ -122,7 +127,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             categoriesCell.selectCategoryCompletion = { index in
                 
                 self.vm?.getCategorizedNews(with: CategoriesMenu.items[index].title).then({ news in
-                    print(CategoriesMenu.items[index].title)
                     if let news = news.results {
                         self.allCategorizedNews = news
                         self.filteredCategorizedNews = news
@@ -155,8 +159,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             self.tableView.deselectRow(at: indexPath, animated: false)
         case 2:
             self.tableView.deselectRow(at: indexPath, animated: true)
-            navigationController?.pushViewController((self.router?.detailsVC())!, animated: true)
-            print("")
+            let vc = self.router?.detailsVC(details: DetailsModel(image: self.filteredCategorizedNews[indexPath.row].multimedia?.last?.url, title: self.filteredCategorizedNews[indexPath.row].title, description: self.filteredCategorizedNews[indexPath.row].abstract, writtenBy: self.breakingNews[indexPath.row].byline, category: self.filteredCategorizedNews[indexPath.row].category, webUrl: self.filteredCategorizedNews[indexPath.row].url, keywords: self.filteredCategorizedNews[indexPath.row].keywords, id: nil))
+            
+            self.navigationController?.pushViewController(vc!, animated: true)
         default:
             break
         }

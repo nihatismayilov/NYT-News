@@ -26,6 +26,7 @@ public struct SearchNews {
             public let webURL: String?
             public let multimedia: [Multimedia]?
             public let headline: Headline?
+            public let keywords: [Keyword]?
             public let pubDate: String?
             public let category: String?
             public let subCategory: String?
@@ -36,6 +37,7 @@ public struct SearchNews {
                         webURL: String,
                         multimedia: [SearchNews.Response.Doc.Multimedia],
                         headline: SearchNews.Response.Doc.Headline,
+                        keywords: [Keyword],
                         pubDate: String,
                         category: String,
                         subCategory: String,
@@ -46,6 +48,7 @@ public struct SearchNews {
                 self.webURL = webURL
                 self.multimedia = multimedia
                 self.headline = headline
+                self.keywords = keywords
                 self.pubDate = pubDate
                 self.category = category
                 self.subCategory = subCategory
@@ -79,6 +82,14 @@ public struct SearchNews {
                 
                 public init(original: String) {
                     self.original = original
+                }
+            }
+            
+            public struct Keyword {
+                public let keyword: String?
+                
+                public init(keyword: String) {
+                    self.keyword = keyword
                 }
             }
         }

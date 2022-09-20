@@ -115,7 +115,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         self.categorylabel.text = breakingNews.category
         self.titleLabel.text = breakingNews.title
         self.descLabel.text = breakingNews.abstract
-        self.publishedDateLabel.text = breakingNews.updateDate
+        self.publishedDateLabel.text = breakingNews.updateDate?.toDateS?.toStringWithTime.getFormattedDateDayMonthYearHour()
     }
     
     private func setupUI() {

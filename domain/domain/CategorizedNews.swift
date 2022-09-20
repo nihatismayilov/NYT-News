@@ -21,6 +21,7 @@ public struct CategorizedNews {
         public let byline: String?
         public let updatedDate, createdDate, publishedDate: String?
         public let multimedia: [Multimedia]?
+        public let keywords: [String]?
         
         public init(category: String,
                     subCategory: String,
@@ -31,7 +32,8 @@ public struct CategorizedNews {
                     updatedDate: String,
                     createdDate: String,
                     publishedDate: String,
-                    multimedia: [CategorizedNews.Results.Multimedia]
+                    multimedia: [CategorizedNews.Results.Multimedia],
+                    keywords: [String]
         ) {
             self.category = category
             self.subCategory = subCategory
@@ -43,6 +45,7 @@ public struct CategorizedNews {
             self.createdDate = createdDate
             self.publishedDate = publishedDate
             self.multimedia = multimedia
+            self.keywords = keywords
         }
         
         // MARK: - Media
