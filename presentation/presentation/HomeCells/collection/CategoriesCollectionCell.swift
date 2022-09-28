@@ -17,13 +17,13 @@ class CategoriesCollectionCell: UICollectionViewCell {
     lazy var categoryView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        
+
         return view
     }()
     
     lazy var categoryTitle: UILabel = {
         let lbl = UILabel()
-        self.categoryView.addSubview(lbl)
+        self.contentView.addSubview(lbl)
         lbl.textColor = Asset.Colors.textColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         lbl.textAlignment = .center
@@ -32,13 +32,15 @@ class CategoriesCollectionCell: UICollectionViewCell {
         return lbl
     }()
     
-    lazy var isSelectedView: UIView = {
+    lazy var underlineView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.backgroundColor.color
+        view.backgroundColor = .clear
         
         return view
     }()
+    
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,16 +52,15 @@ class CategoriesCollectionCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        contentView.clipsToBounds = true
-//        contentView.layer.cornerRadius = 12
+        
+        contentView.clipsToBounds = false
+        contentView.layer.cornerRadius = 12
+//        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
         contentView.snp.makeConstraints { make in
             make.left.equalTo(self.snp.left)
             make.right.equalTo(self.snp.right)
             make.height.equalTo(48)
-//            make.top.equalTo(self.snp.top)
-//            make.bottom.equalTo(self.snp.bottom)
-//            make.width.equalTo(80)
-//            make.width.lessThanOrEqualTo(112)
         }
         
         self.setupUI()
@@ -67,18 +68,20 @@ class CategoriesCollectionCell: UICollectionViewCell {
     
     func setupCellWith(title: String, color: UIColor) {
         self.categoryTitle.text = title
-        self.isSelectedView.backgroundColor = color
+//        self.isSelectedView.backgroundColor = color
         
     }
     
     @objc func onSelect() {
-        isSelectedView.backgroundColor = Asset.Colors.backgroundColor.color
+//        isSelectedView.backgroundColor = .clear
         completion?()
     }
     
     private func setupUI() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onSelect))
-        self.categoryView.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onSelect))
+//        self.categoryView.addGestureRecognizer(tapGesture)
+        self.categoryView.clipsToBounds = true
+        self.categoryView.layer.cornerRadius = 12
         self.categoryView.snp.makeConstraints { make in
             make.left.equalTo(self.contentView.snp.left)
             make.right.equalTo(self.contentView.snp.right)
@@ -93,8 +96,9 @@ class CategoriesCollectionCell: UICollectionViewCell {
             make.bottom.equalTo(self.categoryView.snp.bottom).offset(-4)
         }
         
-        self.isSelectedView.layer.cornerRadius = 2
-        self.isSelectedView.snp.makeConstraints { make in
+//        self.underlineView.backgroundColor = .red
+        self.underlineView.layer.cornerRadius = 2
+        self.underlineView.snp.makeConstraints { make in
             make.bottom.equalTo(self.contentView.snp.bottom)
             make.left.equalTo(self.categoryTitle.snp.left)
             make.right.equalTo(self.categoryTitle.snp.right)

@@ -18,9 +18,17 @@ class HeaderCell: UITableViewCell {
     
     // MARK: - UI Components
     
+    lazy var backView: UIView = {
+        let view = UIView()
+        self.contentView.addSubview(view)
+        view.backgroundColor = Asset.Colors.backgroundColor.color
+        
+        return view
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel()
-        self.contentView.addSubview(lbl)
+        self.backView.addSubview(lbl)
         lbl.textColor = Asset.Colors.textColor.color
         
         lbl.font = UIFont(font: FontFamily.NunitoSans.extraBold, size: 32)
@@ -36,7 +44,7 @@ class HeaderCell: UITableViewCell {
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         view.bounces = false
         view.showsHorizontalScrollIndicator = false
-        self.contentView.addSubview(view)
+        self.backView.addSubview(view)
         
         view.dataSource = self
         view.delegate = self
@@ -52,7 +60,7 @@ class HeaderCell: UITableViewCell {
             make.top.equalTo(self.snp.top)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(400)
+            make.height.equalTo(480)
         }
         setupUI()
     }
@@ -62,21 +70,28 @@ class HeaderCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backView.snp.makeConstraints { make in
+            make.top.equalTo(self.contentView.snp.top)
+            make.left.equalTo(self.contentView.snp.left)
+            make.right.equalTo(self.contentView.snp.right)
+            make.bottom.equalTo(self.contentView.snp.bottom)
+        }
+        
         self.titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.contentView.snp.top).offset(16)
-            make.left.equalTo(self.contentView.snp.left).offset(16)
+            make.top.equalTo(self.backView.snp.top).offset(16)
+            make.left.equalTo(self.backView.snp.left).offset(16)
         }
         
         self.collectionView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left)
+            make.left.equalTo(self.backView.snp.left)
             make.top.equalTo(self.titleLabel.snp.bottom).offset(4)
-            make.right.equalTo(self.contentView.snp.right)
+            make.right.equalTo(self.backView.snp.right)
             make.height.equalTo(400)
         }
     }
 }
 
-extension HeaderCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HeaderCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.breakingNews.count
     }
@@ -88,7 +103,7 @@ extension HeaderCell: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 280, height: 400)
+        return CGSize(width: 320, height: 400)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

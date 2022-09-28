@@ -38,9 +38,9 @@ public class ExploreVC: BaseVC<ExploreViewModel> {
         view.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
         view.delegate = self
         view.dataSource = self
-        view.allowsSelection = false
-        //        view.isScrollEnabled = false
         view.separatorStyle = .none
+        view.allowsSelection = true
+        
         
         return view
     }()
@@ -54,19 +54,14 @@ public class ExploreVC: BaseVC<ExploreViewModel> {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.topItem?.title = "Explore"
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:)))
+        tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
     }
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.startAnimation()
-//        self.searchTableView.isHidden = true
-//        self.animationView.isHidden = false
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
+        
     }
 }
 
@@ -77,15 +72,25 @@ extension ExploreVC: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
-        if let news = self.searchedNews as? [SearchNews.Response.Doc] {
+//        if let news = self.searchedNews as? [SearchNews.Response.Doc] {
             cell.setupCellWith(searchNews: self.searchedNews[indexPath.row])
-        }
+//        }
                 
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 128
+//    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 128
+//    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.searchTableView.deselectRow(at: indexPath, animated: true)
+        print("LLL: \(self.searchedNews[indexPath.row].multimedia?.last?.url)")
+        let model = DetailsModel(image: "https://static01.nyt.com/\(self.searchedNews[indexPath.row].multimedia?.last?.url ?? "")", title: self.searchedNews[indexPath.row].headline?.main, description: self.searchedNews[indexPath.row].abstract, writtenBy: self.searchedNews[indexPath.row].byline?.original, category: self.searchedNews[indexPath.row].category, webUrl: self.searchedNews[indexPath.row].webURL, id: self.searchedNews[indexPath.row].id, pubDate: self.searchedNews[indexPath.row].pubDate)
+
+        let vc = self.router?.detailsVC(details: model)
+        vc?.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 
@@ -110,18 +115,23 @@ extension ExploreVC: UISearchBarDelegate {
         
         let query = searchText.replacingOccurrences(of: " ", with: "%20")
         
-        self.vm?.getSearchNews(with: query).then({ news in
-            print("SSS: \(news)")
-            
-            if let docs = news.response?.docs {
-                print("kkk \(docs.first?.keywords)")
-                self.searchTableView.isHidden = false
-                self.animationView.isHidden = true
-                self.searchedNews = docs
-                self.searchTableView.reloadData()
-                self.removeActivity()
-            }
-        })
+        if Reachability.isConnectedToNetwork() {
+            self.vm?.getSearchNews(with: query).then({ news in
+                print("SSS: \(news)")
+                
+                if let docs = news.response?.docs {
+                    self.searchTableView.isHidden = false
+                    self.animationView.isHidden = true
+                    self.searchedNews = docs
+                    self.searchTableView.reloadData()
+                    self.removeActivity()
+                }
+            })
+        } else {
+            self.removeActivity()
+            self.displayAlertMessage(messageToDisplay: "No Internet Connection", title: "Error!")
+        }
+
         
     }
 }
@@ -144,19 +154,19 @@ extension ExploreVC {
     }
 }
 
-extension ExploreVC {
-    func startAnimation() {
-        animationView.animation = Animation.named("blank")
-        animationView.contentMode = .scaleAspectFit
-        animationView.animationSpeed = 0.7
-        animationView.loopMode = .loop
-        animationView.play()
-        view.addSubview(animationView)
-        animationView.layer.cornerRadius = 24
-        animationView.snp.makeConstraints { make in
-            make.height.equalTo(280)
-            make.width.equalTo(240)
-            make.center.equalTo(self.view.snp.center)
-        }
-    }
-}
+//extension ExploreVC {
+//    func startAnimation() {
+//        animationView.animation = Animation.named("blank")
+//        animationView.contentMode = .scaleAspectFit
+//        animationView.animationSpeed = 0.7
+//        animationView.loopMode = .loop
+//        animationView.play()
+//        view.addSubview(animationView)
+//        animationView.layer.cornerRadius = 24
+//        animationView.snp.makeConstraints { make in
+//            make.height.equalTo(280)
+//            make.width.equalTo(240)
+//            make.center.equalTo(self.view.snp.center)
+//        }
+//    }
+//}

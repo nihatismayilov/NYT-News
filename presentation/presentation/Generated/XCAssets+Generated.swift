@@ -39,6 +39,8 @@ internal enum Asset {
     internal static let textColor = ColorAsset(name: "textColor")
   }
   internal enum Media {
+    internal static let saveEmpty = ImageAsset(name: "saveEmpty")
+    internal static let saveFilled = ImageAsset(name: "saveFilled")
     internal static let _1 = ImageAsset(name: "1")
     internal static let girlCampingBesideACar1280Ã800 = ImageAsset(name: "girl-camping-beside-a-car-1280Ã800")
     internal static let newsLogo = ImageAsset(name: "newsLogo")
@@ -51,6 +53,8 @@ internal enum Asset {
     internal static let tabbar4Selected = ImageAsset(name: "tabbar4Selected")
     internal static let icHidden = ImageAsset(name: "ic_hidden")
     internal static let icShown = ImageAsset(name: "ic_shown")
+    internal static let icDark = ImageAsset(name: "ic_dark")
+    internal static let icLight = ImageAsset(name: "ic_light")
     internal static let profileArrow = ImageAsset(name: "profileArrow")
     internal static let profileDocIcon = ImageAsset(name: "profileDocIcon")
     internal static let profileInfoIcon = ImageAsset(name: "profileInfoIcon")

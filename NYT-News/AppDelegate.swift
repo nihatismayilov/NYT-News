@@ -10,6 +10,7 @@ import Swinject
 import presentation
 import data
 import domain
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = Router(resolver: assembler.resolver).splashScreenVC()
+//        window?.rootViewController = Router(resolver: assembler.resolver).splashScreenVC()
+        
+        FirebaseApp.configure()
+        if FirebaseAuth.Auth.auth().currentUser != nil {
+            window?.rootViewController = Router(resolver: assembler.resolver).tabbarVC()
+        } else {
+            window?.rootViewController = Router(resolver: assembler.resolver).signInVC()
+        }
         
         return true
     }

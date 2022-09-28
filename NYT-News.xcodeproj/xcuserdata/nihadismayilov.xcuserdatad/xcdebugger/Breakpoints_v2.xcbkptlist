@@ -3,4 +3,102 @@
    uuid = "F561FBD1-72B3-4DB6-B62F-160ED4AE186F"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E0FDD142-6F07-4A5F-B0C6-FA068E0D4D2F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "presentation/presentation/HomeCells/CategoriesCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "collectionView(_:didSelectItemAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E0FDD142-6F07-4A5F-B0C6-FA068E0D4D2F - 9d565e3f08399610"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "presentation.CategoriesCell.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "1224">
+               </Location>
+               <Location
+                  uuid = "E0FDD142-6F07-4A5F-B0C6-FA068E0D4D2F - 9d565e3f08399610"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "presentation.CategoriesCell.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "1216">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B481BCF1-0220-464D-B349-B7BFBFD552C3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "presentation/presentation/HomeCells/CategoriesCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "collectionView(_:didSelectItemAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B481BCF1-0220-464D-B349-B7BFBFD552C3 - 9d565e3f08399652"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "presentation.CategoriesCell.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "1416">
+               </Location>
+               <Location
+                  uuid = "B481BCF1-0220-464D-B349-B7BFBFD552C3 - 9d565e3f08399652"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "presentation.CategoriesCell.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "presentation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nihadismayilov/Desktop/NYT-News/presentation/presentation/HomeCells/CategoriesCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "1400">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

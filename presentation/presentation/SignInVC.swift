@@ -7,8 +7,12 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 public class SignInVC: BaseVC<SignInVM> {
+    // MARK: - Variables
+    
+//    let database = Firestore.firestore() 
     
     // MARK: - UI Components
     private lazy var scrollView: UIScrollView = {
@@ -33,19 +37,7 @@ public class SignInVC: BaseVC<SignInVM> {
         lbl.textColor = Asset.Colors.textColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.extraBold, size: 32)
         
-        lbl.text = "Sign In"
-        
-        return lbl
-    }()
-    
-    lazy var subtitleLabel: UILabel = {
-        let lbl = UILabel()
-        self.contentView.addSubview(lbl)
-        lbl.textColor = Asset.Colors.dateColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 16)
-        lbl.numberOfLines = 2
-        
-        lbl.text = "Please, enter your mail address\nand password"
+        lbl.text = "Login"
         
         return lbl
     }()
@@ -54,7 +46,7 @@ public class SignInVC: BaseVC<SignInVM> {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
@@ -72,6 +64,8 @@ public class SignInVC: BaseVC<SignInVM> {
     lazy var emailTF: UITextField = {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
+        tf.keyboardType = .emailAddress
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -79,7 +73,7 @@ public class SignInVC: BaseVC<SignInVM> {
     lazy var emailView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -88,7 +82,7 @@ public class SignInVC: BaseVC<SignInVM> {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
@@ -107,6 +101,7 @@ public class SignInVC: BaseVC<SignInVM> {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
         tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -116,7 +111,7 @@ public class SignInVC: BaseVC<SignInVM> {
     lazy var passwordView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -129,6 +124,7 @@ public class SignInVC: BaseVC<SignInVM> {
         btn.layer.cornerRadius = 24
         btn.titleLabel?.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         btn.setTitle("Sign In", for: .normal)
+        btn.addTarget(self, action: #selector(onLoginTapped), for: .touchUpInside)
         
         return btn
     }()
@@ -167,9 +163,45 @@ public class SignInVC: BaseVC<SignInVM> {
         self.view.addGestureRecognizer(tapGesture)
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        if let theme = APPDefaults.getString(key: "theme") {
+            switch theme {
+            case "Light":
+                UIApplication.shared.windows.first!.overrideUserInterfaceStyle = .light
+            case "Dark":
+                UIApplication.shared.windows.first!.overrideUserInterfaceStyle = .dark
+            default:
+                break
+            }
+        }
+    }
+    
     // MARK: - Functions
+    @objc func onLoginTapped() {
+        guard let email = emailTF.text, emailTF.hasText,
+              let password = passwordTF.text, passwordTF.hasText else {
+            self.displayAlertMessage(messageToDisplay: "Some fields are empty, please fill them before continuing", title: "Error!")
+            return
+            // show alert here
+        }
+        
+        self.addActivity(frame: self.view.frame)
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+            guard error == nil else {
+                self?.displayAlertMessage(messageToDisplay: error?.localizedDescription ?? "Unexpected error occured", title: "Error!")
+                self?.removeActivity()
+                return
+            }
+                        
+            let vc = self?.router?.tabbarVC()
+            vc?.modalPresentationStyle = .fullScreen
+            self?.present(vc!, animated: true)
+        }
+    }
+    
     func rightView() {
-        rightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        rightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
         rightButton.setImage(Asset.Media.icHidden.image, for: .normal)
         rightButton.addTarget(self, action: #selector(onHideShowTapped), for: .touchUpInside)
         passwordTF.rightView = rightButton
@@ -215,17 +247,15 @@ extension SignInVC {
             make.left.equalTo(self.contentView.snp.left).offset(16)
         }
         
-        self.subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(8)
-            make.left.equalTo(self.titleLabel.snp.left)
-        }
-        
         emailStack.addArrangedSubview(emailLabel)
         emailStack.addArrangedSubview(emailTF)
         self.emailStack.snp.makeConstraints { make in
-            make.top.equalTo(self.subtitleLabel.snp.bottom).offset(48)
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
+        }
+        emailTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
         }
         self.emailView.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -240,6 +270,9 @@ extension SignInVC {
             make.top.equalTo(self.emailStack.snp.bottom).offset(24)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
+        }
+        passwordTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
         }
         self.passwordView.snp.makeConstraints { make in
             make.height.equalTo(1)

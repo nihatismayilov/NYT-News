@@ -10,10 +10,15 @@ import UIKit
 import SnapKit
 import Kingfisher
 import SafariServices
+import Lottie
+import Firebase
+import FirebaseFirestore
 
 public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     
     // MARK: - Variables
+//    let database = Firestore.firestore()
+    
     var details: DetailsModel?
     var sharedLink: String?
     
@@ -46,12 +51,31 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     lazy var backButton: UIButton = {
         let btn = UIButton()
         self.backView.addSubview(btn)
+        btn.setImage(Asset.Media.icBack.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(onBackTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var saveView: UIView = {
+        let view = UIView()
+        self.contentView.addSubview(view)
+        view.backgroundColor = .black.withAlphaComponent(0.5)
+        view.layer.cornerRadius = 12
+        
+        return view
+    }()
+    
+    lazy var saveButton: UIButton = {
+        let btn = UIButton()
+        self.saveView.addSubview(btn)
         btn.imageView?.tintColor = .white
-        btn.setImage(Asset.Media.icBack.image.withRenderingMode(.alwaysTemplate), for: .normal)
-        btn.addTarget(self, action: #selector(onBackTapped), for: .allTouchEvents)
+        btn.setImage(Asset.Media.saveEmpty.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(onSaveTapped), for: .touchUpInside)
         
         return btn
     }()
+    
+    //    lazy var saveAnimation = AnimationView()
     
     lazy var shareView: UIView = {
         let view = UIView()
@@ -179,15 +203,6 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         return lbl
     }()
     
-    lazy var keywordsView: UIStackView = {
-        let view = UIStackView()
-        self.detailsView.addSubview(view)
-        
-        view.spacing = 8
-        
-        return view
-    }()
-    
     // MARK: - Parent Delegate
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,6 +210,10 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         self.setupUI()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        //        self.animationFirstState()
+        
+        let saveGesture = UITapGestureRecognizer(target: self, action: #selector(onSaveTapped))
+        //        self.saveAnimation.addGestureRecognizer(saveGesture)
         
         self.setData()
     }
@@ -202,8 +221,128 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
+        guard DetailsHelper.shared.detailsModelArray?.isEmpty == false else {
+            self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+            return
+        }
+//        if let detail = self.details, DetailsHelper.shared.detailsModelArray?.contains(detail) == true {
+//            self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+//        } else {
+//            self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+//        }
+        
+        let filteredModel = DetailsHelper.shared.detailsModelArray?.filter({ model in
+            if model.title == self.details?.title {
+                return true
+            } else {
+                return false
+            }
+        })
+        
+        if filteredModel?.isEmpty == false {
+            self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+        } else {
+            self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+        }
+//        do {
+//            if let data = APPDefaults.getData(key: "FavoriteNews") {
+//                let decoder = try JSONDecoder().decode([DetailsModel].self, from: data)
+//                DetailsHelper.shared.detailsModelArray = decoder
+//
+//                let checkingDetail = DetailsHelper.shared.detailsModelArray?.filter({ detail in
+//                    if detail == self.details {
+//                        return true
+//                    } else {
+//                        return false
+//                    }
+//                })
+//                if checkingDetail?.isEmpty == false {
+//                    self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+//                } else {
+//                    self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+//                }
+////                if ((DetailsHelper.shared.detailsModelArray?.contains(self.details!)) != nil) {
+////                    self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+////                } else {
+////                    self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+////                }
+//            } else {
+//                print("")
+//            }
+//        } catch {
+//            print("Couldn't")
+//        }
+        
+//
+//        DetailsHelper.shared.detailsModelArray?.forEach({ detail in
+//            print("HERE \(detail)")
+//            if detail == self.details {
+//
+//                return
+//            } else {
+//                //                    self.animationFirstState()
+//            }
+//        })
+        
+        //        if DetailsHelper.shared.detailsModelArray?.contains(where: { detail in
+        //
+        //        })
+        //        if DetailsHelper.shared.detailsModelArray?.contains(where: { details in
+        //            if details == self.details {
+        //                self.animationLastState()
+        //                return true
+        //            } else {
+        //                self.animationFirstState()
+        //                return false
+        //            }
+        //        })
     }
     // MARK: - Functions
+    
+    @objc func onSaveTapped() {
+        
+        
+        DetailsHelper.shared.detailsModelArray?.forEach({ detail in
+            if self.details == detail {
+                self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+                return
+            } else {
+                //                    self.animationFirstState()
+                self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+            }
+        })
+        
+        if DetailsHelper.shared.detailsModelArray?.contains(self.details!) ?? false, let idIndex = DetailsHelper.shared.detailsModelArray?.firstIndex(of: self.details!) {
+            
+            DetailsHelper.shared.detailsModelArray?.remove(at: idIndex)
+            self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
+            //            self.startAnimationBackward()
+        } else {
+            DetailsHelper.shared.detailsModelArray?.append(self.details!)
+            self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
+            //            self.startAnimation()
+            //                    self.animationView.stop()
+        }
+        
+//        do {
+//            let data = try JSONEncoder().encode(DetailsHelper.shared.detailsModelArray)
+//            APPDefaults.setData(key: "FavoriteNews", value: data)
+//        } catch {
+//            print("Couldn't save news to appDefaults")
+//        }
+        if let uuid = Firebase.Auth.auth().currentUser?.uid {
+            do {
+                let data = try JSONEncoder().encode(DetailsHelper.shared.detailsModelArray)
+                
+                APPDefaults.setData(key: "FavoriteNews", value: data)
+                let favoritesRef = database.document("\(uuid)/favorites")
+                favoritesRef.setData(["favoriteNews": data])
+            } catch {
+                print("Couldn't save news to appDefaults")
+            }
+        }
+    }
     
     @objc func onBackTapped() {
         self.navigationController?.popViewController(animated: true)
@@ -227,12 +366,12 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         newImageView.addGestureRecognizer(tap)
         self.view.addSubview(newImageView)
         
-//        self.navigationController?.isNavigationBarHidden = true
+        //        self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func dismissFullscreenImage(sender: UITapGestureRecognizer) {
-//        self.navigationController?.isNavigationBarHidden = false
+        //        self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()
     }
@@ -265,27 +404,45 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         self.categoryLabel.text = self.details?.category ?? "N/A"
         self.sharedLink = self.details?.webUrl
         
-        var count = 0
-        var limit = 0
-        self.details?.keywords?.forEach { word in
-            let keywordView = KeywordView()
-            
-            if count < 3 {
-                count += 1
-                
-                keywordView.setup(word: word)
-                self.keywordsView.addArrangedSubview(keywordView)
-                limit += Int(keywordView.label.frame.size.width)
-                
-            }
-        }
     }
 }
+
+//extension DetailsVC {
+//    func animationFirstState() {
+//        saveAnimation.animation = Animation.named("save")
+//        saveAnimation.contentMode = .scaleAspectFill
+//    }
+//
+//    func animationLastState() {
+//        saveAnimation.animation = Animation.named("save")
+//        saveAnimation.currentProgress = 1.0
+//        saveAnimation.contentMode = .scaleAspectFill
+//    }
+//
+//    func startAnimation() {
+//        saveAnimation.animation = Animation.named("save")
+//        saveAnimation.animationSpeed = 1.0
+//        saveAnimation.loopMode = .playOnce
+//        saveAnimation.contentMode = .scaleAspectFill
+//
+//        saveAnimation.play { (finished) in }
+//    }
+//
+//    func startAnimationBackward() {
+//        saveAnimation.animation = Animation.named("save")
+//        saveAnimation.animationSpeed = -1.0
+//        saveAnimation.currentProgress = 1.0
+//        saveAnimation.loopMode = .repeatBackwards(1)
+//        saveAnimation.contentMode = .scaleAspectFill
+//
+//        saveAnimation.play { (finished) in }
+//    }
+//}
 
 extension DetailsVC {
     func setupUI() {
         self.scrollView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
+            //            make.edges.equalToSuperview()
             make.top.equalTo(self.view.snp.top)
             make.left.equalTo(self.view.snp.left)
             make.right.equalTo(self.view.snp.right)
@@ -349,6 +506,23 @@ extension DetailsVC {
             make.height.width.equalTo(24)
         }
         
+        self.saveView.layer.cornerRadius = 10
+        self.saveView.snp.makeConstraints { make in
+            make.right.equalTo(self.shareView.snp.left).offset(-16)
+            make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(24)
+            make.width.height.equalTo(40)
+        }
+        
+//        self.saveView.addSubview(saveAnimation)
+        saveButton.snp.makeConstraints { make in
+            make.top.equalTo(self.saveView.snp.top)
+            make.left.equalTo(self.saveView.snp.left)
+            make.right.equalTo(self.saveView.snp.right)
+            make.bottom.equalTo(self.saveView.snp.bottom)
+//            make.center.equalTo(self.saveView.snp.center)
+//            make.height.width.equalTo(24)
+        }
+        
         self.shareView.layer.cornerRadius = 10
         self.shareView.snp.makeConstraints { make in
             make.right.equalTo(self.contentView.snp.right).offset(-24)
@@ -384,12 +558,6 @@ extension DetailsVC {
         
         self.webLabel.snp.makeConstraints { make in
             make.top.equalTo(self.aboutLabel.snp.bottom).offset(16)
-            make.right.equalTo(self.detailsView.snp.right).offset(-16)
-        }
-        
-        self.keywordsView.snp.makeConstraints { make in
-            make.top.equalTo(self.detailsView.snp.top).offset(16)
-            make.left.equalTo(self.detailsView.snp.left).offset(16)
             make.right.equalTo(self.detailsView.snp.right).offset(-16)
         }
     }

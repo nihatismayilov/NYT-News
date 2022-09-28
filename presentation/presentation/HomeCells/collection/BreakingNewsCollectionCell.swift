@@ -35,8 +35,8 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         
         lbl.textColor = .white
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 20)
-        lbl.numberOfLines = 0
-        lbl.text = " News from NEw York Times \n News from NEw York Times\n News from NEw York Times"
+        lbl.numberOfLines = 3
+        lbl.text = "News from NEw York Times \n News from NEw York Times\n News from NEw York Times"
         
         return lbl
     }()
@@ -46,7 +46,7 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         
         lbl.textColor = UIColor.init(white: 0.92, alpha: 1.0)
         lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 12)
-        lbl.numberOfLines = 0
+        lbl.numberOfLines = 1
         lbl.text = "API was taken from NYT"
         
         return lbl
@@ -125,7 +125,6 @@ class BreakingNewsCollectionCell: UICollectionViewCell {
         self.contentView.addSubview(descLabel)
         self.contentView.addSubview(categorylabel)
         self.contentView.addSubview(publishedDateLabel)
-        
         
         thumbImage.snp.makeConstraints { make in
             make.top.equalTo(self.contentView.snp.top)

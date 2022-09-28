@@ -16,9 +16,17 @@ class CategorizedCell: UITableViewCell {
     
     // MARK: - UI Components
     
-    lazy var thumbView: UIView = {
+    lazy var backView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
+        view.backgroundColor = Asset.Colors.backgroundColor.color
+        
+        return view
+    }()
+    
+    lazy var thumbView: UIView = {
+        let view = UIView()
+        self.backView.addSubview(view)
         
         return view
     }()
@@ -34,7 +42,7 @@ class CategorizedCell: UITableViewCell {
     
     lazy var titleLbl: UILabel = {
         let lbl = UILabel()
-        self.contentView.addSubview(lbl)
+        self.backView.addSubview(lbl)
         lbl.textColor = Asset.Colors.textColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         lbl.numberOfLines = 3
@@ -45,7 +53,7 @@ class CategorizedCell: UITableViewCell {
     
     lazy var categoryView: UIView = {
         let view = UIView()
-        self.contentView.addSubview(view)
+        self.backView.addSubview(view)
         view.backgroundColor = Asset.Colors.redColor2.color.withAlphaComponent(0.2)
         
         return view
@@ -64,9 +72,9 @@ class CategorizedCell: UITableViewCell {
     
     lazy var dateLbl: UILabel = {
         let lbl = UILabel()
-        self.contentView.addSubview(lbl)
+        self.backView.addSubview(lbl)
         lbl.textAlignment = .right
-        lbl.textColor = Asset.Colors.dateColor.color//UIColor.init(white: 0.79, alpha: 1.0)
+        lbl.textColor = Asset.Colors.dateColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 12)
         lbl.numberOfLines = 0
         lbl.text = "N/A"
@@ -77,18 +85,15 @@ class CategorizedCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        contentView.backgroundColor = Asset.Colors.backgroundColor.color
         contentView.clipsToBounds = false
         contentView.layer.cornerRadius = 12
-//        contentView.layer.borderWidth = 1
-//        contentView.layer.borderColor = UIColor.init(white: 0.92, alpha: 1.0).cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        contentView.layer.shadowRadius = 5
-        contentView.layer.shadowColor = Asset.Colors.textColor.color.cgColor
-        contentView.layer.shadowOpacity = 0.1
+//        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        contentView.layer.shadowRadius = 5
+//        contentView.layer.shadowColor = Asset.Colors.textColor.color.cgColor
+//        contentView.layer.shadowOpacity = 0.1
         
         self.contentView.snp.makeConstraints { make in
-//            make.top.equalTo(self.snp.top).offset(4)
-//            make.bottom.equalTo(self.snp.bottom).offset(-4)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(128)
@@ -101,7 +106,6 @@ class CategorizedCell: UITableViewCell {
     }
     
     func setupCellWith(categorizedNews: CategorizedNews.Results) {
-//        if categorizedNews.title != "" {
             var imageUrl: URL?
             if let url = categorizedNews.multimedia?.last?.url {
                 imageUrl = URL.init(string: "\(url)")
@@ -126,10 +130,12 @@ class CategorizedCell: UITableViewCell {
         }
         
             self.dateLbl.text = categorizedNews.publishedDate?.toDateM?.toStringWithTime.getFormattedDateDayMonthYearHour()
-//        }
     }
     
     private func setupUI() {
+        self.backView.snp.makeConstraints { make in
+            make.edges.equalTo(self.contentView.snp.edges)
+        }
         
         thumbView.clipsToBounds = true
         thumbView.layer.cornerRadius = 12
@@ -146,10 +152,6 @@ class CategorizedCell: UITableViewCell {
             make.right.equalTo(self.thumbView.snp.right)
             make.top.equalTo(self.thumbView.snp.top)
             make.bottom.equalTo(self.thumbView.snp.bottom)
-//            make.left.equalTo(self.contentView.snp.left)
-//            make.top.equalTo(self.contentView.snp.top)
-//            make.bottom.equalTo(self.contentView.snp.bottom)
-//            make.width.equalTo(120)
         }
         
         self.titleLbl.snp.makeConstraints { make in
@@ -172,7 +174,7 @@ class CategorizedCell: UITableViewCell {
         }
         
         self.dateLbl.snp.makeConstraints { make in
-            make.right.equalTo(self.contentView.snp.right).offset(-8)
+            make.right.equalTo(self.contentView.snp.right).offset(-16)
             make.left.equalTo(self.categoryView.snp.right).offset(8)
             make.bottom.equalTo(self.thumbImage.snp.bottom).offset(-4)
         }

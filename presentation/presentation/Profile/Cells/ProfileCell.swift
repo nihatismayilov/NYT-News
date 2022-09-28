@@ -11,11 +11,20 @@ class ProfileCell: UITableViewCell {
     // MARK: - Variables
     static let identifier = "profileCell"
     
+    var switchCompletion: (() -> Void)?
+    
     // MARK: - UI Components
+    lazy var backView: UIView = {
+        let view = UIView()
+        self.contentView.addSubview(view)
+        view.backgroundColor = Asset.Colors.backgroundColor.color
+        
+        return view
+    }()
     
     lazy var iconImage: UIImageView = {
         let img = UIImageView()
-        self.contentView.addSubview(img)
+        self.backView.addSubview(img)
         img.tintColor = Asset.Colors.redWithDark.color
         img.image = Asset.Media.profileLogoutIcon.image
         
@@ -24,7 +33,7 @@ class ProfileCell: UITableViewCell {
     
     lazy var stackView: UIStackView = {
         let view = UIStackView()
-        self.contentView.addSubview(view)
+        self.backView.addSubview(view)
         
         view.alignment = .fill
         view.distribution = .fillProportionally
@@ -54,21 +63,32 @@ class ProfileCell: UITableViewCell {
     
     lazy var arrowImage: UIImageView = {
         let img = UIImageView()
-        self.contentView.addSubview(img)
+        self.backView.addSubview(img)
         img.tintColor = Asset.Colors.redWithDark.color
         img.image = Asset.Media.profileArrow.image
         
         return img
     }()
+    
+    lazy var switchButton: UISwitch = {
+        let btn = UISwitch()
+        self.backView.addSubview(btn)
+        btn.isHidden = true
+        btn.onTintColor = Asset.Colors.accentColor.color
+        btn.addTarget(self, action: #selector(onSwitch), for: .allEvents)
+        
+        return btn
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
        
-        self.contentView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalTo(48)
-        }
+//        self.contentView.snp.makeConstraints { make in
+//            make.left.equalToSuperview()
+//            make.right.equalToSuperview()
+//            make.height.equalTo(48)
+//        }
+//
         setupUI()
     }
     
@@ -82,22 +102,34 @@ class ProfileCell: UITableViewCell {
         self.menuDescription.text = profile.description
     }
     
+    @objc func onSwitch() {
+        switchCompletion?()
+    }
+    
     private func setupUI() {
+        self.backView.snp.makeConstraints { make in
+            make.edges.equalTo(self.contentView.snp.edges)
+        }
+        
         self.iconImage.snp.makeConstraints { make in
             make.width.height.equalTo(24)
-            make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.centerY.equalTo(self.contentView.snp.centerY)
+            make.left.equalTo(self.backView.snp.left).offset(24)
+            make.centerY.equalTo(self.backView.snp.centerY)
         }
         
         self.stackView.snp.makeConstraints { make in
             make.left.equalTo(self.iconImage.snp.right).offset(16)
-            make.centerY.equalTo(self.contentView.snp.centerY)
+            make.centerY.equalTo(self.backView.snp.centerY)
         }
         
         self.arrowImage.snp.makeConstraints { make in
             make.width.height.equalTo(16)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
-            make.centerY.equalTo(self.contentView.snp.centerY)
+            make.right.equalTo(self.backView.snp.right).offset(-24)
+            make.centerY.equalTo(self.backView.snp.centerY)
+        }
+        self.switchButton.snp.makeConstraints { make in
+            make.right.equalTo(self.backView.snp.right).offset(-24)
+            make.centerY.equalTo(self.backView.snp.centerY)
         }
     }
 }

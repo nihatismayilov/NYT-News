@@ -75,7 +75,7 @@ public class TermsAndConditionsVC: BaseVC<TermsAndConditionsViewModel>, UIGestur
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
     }
 }
 
@@ -87,12 +87,11 @@ extension TermsAndConditionsVC {
         self.contentView.snp.makeConstraints { make in
             make.edges.equalTo(self.scrollView.snp.edges)
             make.width.equalTo(self.scrollView.snp.width)
-//            make.height.equalTo(900)
         }
         
         self.titleLabel.snp.makeConstraints { make in
             make.left.equalTo(self.contentView.snp.left).offset(16)
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(24)
+            make.top.equalTo(self.contentView.snp.top)
         }
         
         self.updatedDate.snp.makeConstraints { make in

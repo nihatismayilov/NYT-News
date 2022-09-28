@@ -9,10 +9,15 @@ import Foundation
 import SnapKit
 import UIKit
 import domain
+import Firebase
+import FirebaseFirestore
+import Network
 
 public class HomeVC: BaseVC<HomeViewModel> {
     
     // MARK: - Variables
+//    let database = Firestore.firestore()
+    
     var breakingNews = [PopularNews.PopularResults]()
     var allCategorizedNews = [CategorizedNews.Results]()
     var filteredCategorizedNews = [CategorizedNews.Results]()
@@ -28,6 +33,11 @@ public class HomeVC: BaseVC<HomeViewModel> {
         view.separatorStyle = .none
         view.showsVerticalScrollIndicator = false
         
+        view.delaysContentTouches = true
+        view.clearsContextBeforeDrawing = true
+        view.isOpaque = true
+        view.allowsSelectionDuringEditing = false
+        
         return view
     }()
     
@@ -37,7 +47,7 @@ public class HomeVC: BaseVC<HomeViewModel> {
         self.view.backgroundColor = Asset.Colors.backgroundColor.color
         self.setupUI()
         self.tableView.isHidden = true
-        self.addActivity(frame: self.view.frame)
+        self.savePersonalData()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: Asset.Media.newsLogo.image.withRenderingMode(.alwaysOriginal),
@@ -51,28 +61,31 @@ public class HomeVC: BaseVC<HomeViewModel> {
             target: self,
             action: #selector(onProfileTapped))
         
-        self.vm?.getCategorizedNews(with: "world").then({ news in
-            if let news = news.results {
-                self.allCategorizedNews = news
-                self.filteredCategorizedNews = news
-                self.tableView.reloadData()
-            }
-            self.vm?.getPopularNews().then({ news in
-                if let results = news.results {
-                    self.breakingNews = results
-                    self.tableView.reloadData()
-                    self.tableView.isHidden = false
-                    self.removeActivity()
-                }
-            })
-        })
+        self.getNews()
+        
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            self.removeActivity()
+//        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
+        
+        
+        if !Reachability.isConnectedToNetwork() {
+            self.displayAlertMessage(messageToDisplay: "No Internet Connection", title: "Error!")
+        } else {
+//            self.getNews()
+        }
+
     }
+    
     // MARK: - Funstions
+    @objc func onSaveData() {
+        self.tabBarController?.selectedIndex = 2
+    }
     
     @objc func onLogoTapped() {
         tableView.setContentOffset(.zero, animated: true)
@@ -80,6 +93,39 @@ public class HomeVC: BaseVC<HomeViewModel> {
     
     @objc func onProfileTapped() {
         tabBarController?.selectedIndex = 3
+    }
+    
+    func getNews() {
+        if Reachability.isConnectedToNetwork() {
+            self.addActivity(frame: self.view.frame)
+            self.vm?.getCategorizedNews(with: "world").then({ news in
+                if let news = news.results {
+                    self.allCategorizedNews = news
+                    self.filteredCategorizedNews = news
+                    self.tableView.reloadData()
+                }
+                self.vm?.getPopularNews().then({ news in
+                    if let results = news.results {
+                        self.breakingNews = results
+                        self.tableView.reloadData()
+                        self.tableView.isHidden = false
+                        self.removeActivity()
+                    }
+                })
+            })
+        } else {
+            self.savePersonalData()
+            let alert = UIAlertController(title: "Error!", message: "Internet connection is lost", preferredStyle: .alert)
+            
+            let okBtn = UIAlertAction(title: "Ok", style: .cancel) {
+                UIAlertAction in
+                self.onSaveData()
+            }
+            
+            alert.addAction(okBtn)
+            
+            self.present(alert, animated: true)
+        }
     }
 }
 
@@ -113,8 +159,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             headerCell.collectionView.reloadData()
             
             headerCell.rowSelectedCompletion = { index in
-                let vc = self.router?.detailsVC(details: DetailsModel(image: self.breakingNews[index].media?.first?.mediaMetaData?.last?.url, title: self.breakingNews[index].title, description: self.breakingNews[index].abstract, writtenBy: self.breakingNews[index].byline, category: self.breakingNews[index].category, webUrl: self.breakingNews[index].url, keywords: self.breakingNews[index].keywords, id: self.breakingNews[index].id))
-                
+                let vc = self.router?.detailsVC(details: DetailsModel(image: self.breakingNews[index].media?.first?.mediaMetaData?.last?.url, title: self.breakingNews[index].title, description: self.breakingNews[index].abstract, writtenBy: self.breakingNews[index].byline, category: self.breakingNews[index].category, webUrl: self.breakingNews[index].url, id: "\(String(describing: self.breakingNews[index].id))", pubDate: self.breakingNews[index].updateDate))
+                vc!.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc!, animated: true)
             }
             
@@ -159,8 +205,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             self.tableView.deselectRow(at: indexPath, animated: false)
         case 2:
             self.tableView.deselectRow(at: indexPath, animated: true)
-            let vc = self.router?.detailsVC(details: DetailsModel(image: self.filteredCategorizedNews[indexPath.row].multimedia?.last?.url, title: self.filteredCategorizedNews[indexPath.row].title, description: self.filteredCategorizedNews[indexPath.row].abstract, writtenBy: self.breakingNews[indexPath.row].byline, category: self.filteredCategorizedNews[indexPath.row].category, webUrl: self.filteredCategorizedNews[indexPath.row].url, keywords: self.filteredCategorizedNews[indexPath.row].keywords, id: nil))
-            
+            let vc = self.router?.detailsVC(details: DetailsModel(image: self.filteredCategorizedNews[indexPath.row].multimedia?.last?.url, title: self.filteredCategorizedNews[indexPath.row].title, description: self.filteredCategorizedNews[indexPath.row].abstract, writtenBy: self.breakingNews[indexPath.row].byline, category: self.filteredCategorizedNews[indexPath.row].category, webUrl: self.filteredCategorizedNews[indexPath.row].url, id: nil, pubDate: self.filteredCategorizedNews[indexPath.row].publishedDate))
+            vc?.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc!, animated: true)
         default:
             break

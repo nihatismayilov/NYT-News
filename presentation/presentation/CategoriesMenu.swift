@@ -14,12 +14,12 @@ struct CategoriesMenu {
     var backColor: UIColor
     
     static var items = [
-        CategoriesMenu(title: "World", isSelected: true, backColor: Asset.Colors.redColor.color),
-        CategoriesMenu(title: "US", isSelected: false, backColor: Asset.Colors.tabbarColor.color),
-        CategoriesMenu(title: "Arts", isSelected: false, backColor: Asset.Colors.tabbarColor.color),
-        CategoriesMenu(title: "Science", isSelected: false, backColor: Asset.Colors.tabbarColor.color),
-        CategoriesMenu(title: "Climate", isSelected: false, backColor: Asset.Colors.tabbarColor.color),
-        CategoriesMenu(title: "Business", isSelected: false, backColor: Asset.Colors.tabbarColor.color),
-        CategoriesMenu(title: "Technology", isSelected: false, backColor: Asset.Colors.tabbarColor.color)
+        CategoriesMenu(title: "World", isSelected: false, backColor: Asset.Colors.redColor.color),
+        CategoriesMenu(title: "US", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "Arts", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "Science", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "Climate", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "Business", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "Technology", isSelected: false, backColor: UIColor.clear)
     ]
 }

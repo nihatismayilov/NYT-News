@@ -8,8 +8,16 @@
 import Foundation
 import UIKit
 import SnapKit
+import Firebase
+import FirebaseFirestore
 
 public class SignUpVC: BaseVC<SignUpVM> {
+    
+    // MARK: - Variables
+//    let database = Firestore.firestore()
+    
+    let passwordRightButton = UIButton(type: .system)
+    let rePasswordRightButton = UIButton(type: .system)
     
     // MARK: - UI Components
     private lazy var scrollView: UIScrollView = {
@@ -39,46 +47,70 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return lbl
     }()
     
-    lazy var subtitleLabel: UILabel = {
-        let lbl = UILabel()
-        self.contentView.addSubview(lbl)
-        lbl.textColor = .lightGray
-        lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 16)
-        lbl.text = "Create your new account"
-        
-        return lbl
-    }()
-    
-    lazy var fullNameStack: UIStackView = {
+    lazy var nameStack: UIStackView = {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
     }()
     
-    lazy var fullNameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Full Name"
+        lbl.text = "Name"
         lbl.textColor = Asset.Colors.accentColor.color
         lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         
         return lbl
     }()
     
-    lazy var fullNameTF: UITextField = {
+    lazy var nameTF: UITextField = {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
         
         return tf
     }()
     
-    lazy var fullNameView: UIView = {
+    lazy var nameView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
+        
+        return view
+    }()
+    
+    lazy var surnameStack: UIStackView = {
+        let stack = UIStackView()
+        self.contentView.addSubview(stack)
+        stack.axis = .vertical
+        stack.spacing = 2
+        stack.distribution = .equalSpacing
+        
+        return stack
+    }()
+    
+    lazy var surnameLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Surname"
+        lbl.textColor = Asset.Colors.accentColor.color
+        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
+        
+        return lbl
+    }()
+    
+    lazy var surnameTF: UITextField = {
+        let tf = UITextField()
+        tf.textColor = Asset.Colors.textColor.color
+        
+        return tf
+    }()
+    
+    lazy var surnameView: UIView = {
+        let view = UIView()
+        self.contentView.addSubview(view)
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -87,7 +119,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
@@ -105,6 +137,8 @@ public class SignUpVC: BaseVC<SignUpVM> {
     lazy var emailTF: UITextField = {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
+        tf.keyboardType = .emailAddress
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -112,7 +146,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
     lazy var emailView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -121,7 +155,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
@@ -139,6 +173,8 @@ public class SignUpVC: BaseVC<SignUpVM> {
     lazy var passwordTF: UITextField = {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
+        tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -146,7 +182,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
     lazy var passwordView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -155,7 +191,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
         let stack = UIStackView()
         self.contentView.addSubview(stack)
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 2
         stack.distribution = .equalSpacing
         
         return stack
@@ -170,9 +206,11 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return lbl
     }()
     
-    lazy var rePasswordTF: UITextField = {
+    lazy var reenterPasswordTF: UITextField = {
         let tf = UITextField()
         tf.textColor = Asset.Colors.textColor.color
+        tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -180,7 +218,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
     lazy var rePasswordView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
-        view.backgroundColor = Asset.Colors.textColor.color
+        view.backgroundColor = .lightGray
         
         return view
     }()
@@ -193,39 +231,9 @@ public class SignUpVC: BaseVC<SignUpVM> {
         btn.layer.cornerRadius = 24
         btn.titleLabel?.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
         btn.setTitle("Create Account", for: .normal)
+        btn.addTarget(self, action: #selector(onCreateTapped), for: .touchUpInside)
         
         return btn
-    }()
-    
-    lazy var agreeLabel: UILabel = {
-        let lbl = UILabel()
-        self.contentView.addSubview(lbl)
-        lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 12)
-        lbl.textColor = .lightGray
-        lbl.numberOfLines = 0
-        lbl.textAlignment = .center
-        
-        var firstColored = NSMutableAttributedString()
-        firstColored = NSMutableAttributedString(string: "By continuing, you agree to our Terms of\nServices and Privacy Policy")
-        firstColored.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 32, length: 18))
-        
-        var firstFont = NSMutableAttributedString()
-        firstFont = firstColored
-        firstFont.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 32, length: 18))
-        
-        var secondColored = NSMutableAttributedString()
-        secondColored = firstFont
-        secondColored.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 54, length: 14))
-        
-        var secondFont = NSMutableAttributedString()
-        secondFont = secondColored
-        secondFont.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 54, length: 14))
-        
-        lbl.isUserInteractionEnabled = true
-        
-        lbl.attributedText = secondFont
-        
-        return lbl
     }()
     
     lazy var signInLabel: UILabel = {
@@ -243,7 +251,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
         secondAS.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 25, length: 7))
         
         lbl.isUserInteractionEnabled = true
-        let signUpGesture = UITapGestureRecognizer(target: self, action: #selector(onSignUpTapped))
+        let signUpGesture = UITapGestureRecognizer(target: self, action: #selector(onSignInTapped))
         lbl.addGestureRecognizer(signUpGesture)
         
         lbl.attributedText = secondAS
@@ -262,8 +270,51 @@ public class SignUpVC: BaseVC<SignUpVM> {
         self.view.addGestureRecognizer(tapGesture)
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        if let theme = APPDefaults.getString(key: "theme") {
+            switch theme {
+            case "Light":
+                UIApplication.shared.windows.first!.overrideUserInterfaceStyle = .light
+            case "Dark":
+                UIApplication.shared.windows.first!.overrideUserInterfaceStyle = .dark
+            default:
+                break
+            }
+        }
+    }
+    
     // MARK: - Functions
-    @objc func onSignUpTapped(_ gesture: UITapGestureRecognizer) {
+    @objc func onCreateTapped() {
+        guard let mail = emailTF.text, emailTF.hasText,
+              let password = passwordTF.text, passwordTF.hasText,
+              let reenterPassword = reenterPasswordTF.text, reenterPasswordTF.hasText,
+              let name = nameTF.text, nameTF.hasText, let surname = surnameTF.text, surnameTF.hasText else {
+            self.displayAlertMessage(messageToDisplay: "Some fields are empty, please fill them before continuing", title: "Error!")
+            self.removeActivity()
+            return
+        }
+        
+        if password != reenterPassword {
+            self.displayAlertMessage(messageToDisplay: "Passwords do not match", title: "Error!")
+            self.removeActivity()
+        } else {
+            self.addActivity(frame: self.view.frame)
+            Firebase.Auth.auth().createUser(withEmail: mail, password: password) { [weak self] rsult, error in
+                guard error == nil else {
+                    self?.displayAlertMessage(messageToDisplay: error?.localizedDescription ?? "Unrecognized error occured", title: "Error!")
+                    self?.removeActivity()
+                    return
+                }
+                
+                if let currentUser = Firebase.Auth.auth().currentUser {
+                    self?.saveProfile(id: currentUser.uid, name: name, surname: surname, mail: mail, password: password)
+                }
+            }
+        }
+        
+    }
+    
+    @objc func onSignInTapped(_ gesture: UITapGestureRecognizer) {
         guard let text = self.signInLabel.text else { return }
         let conditionsRange = (text as NSString).range(of: "Sign In")
         let cancellationRange = (text as NSString).range(of: "Already have an account? ")
@@ -278,6 +329,53 @@ public class SignUpVC: BaseVC<SignUpVM> {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func saveProfile(id: String ,name: String, surname: String, mail: String, password: String) {
+        if let uuid = Auth.auth().currentUser?.uid {
+            let nameRef = database.document("\(uuid)/name")
+            nameRef.setData(["name": name])
+            
+            let surnameRef = database.document("\(uuid)/surname")
+            surnameRef.setData(["surname": surname])
+            
+            let mailRef = database.document("\(uuid)/mail")
+            mailRef.setData(["mail": mail])
+            
+            let passRef = database.document("\(uuid)/password")
+            passRef.setData(["password": password])
+            
+            self.removeActivity()
+            let vc = self.router?.tabbarVC()
+            vc?.modalPresentationStyle = .fullScreen
+            self.present(vc!, animated: true)
+        }
+    }
+    
+    func passwordRightView() {
+        passwordRightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
+        passwordRightButton.setImage(Asset.Media.icHidden.image, for: .normal)
+        passwordRightButton.addTarget(self, action: #selector(onHideShowTappedForPassword), for: .touchUpInside)
+        passwordTF.rightView = passwordRightButton
+        passwordTF.rightViewMode = .always
+    }
+    @objc func onHideShowTappedForPassword() {
+        self.passwordRightButton.setImage(self.passwordTF.isSecureTextEntry == false ? Asset.Media.icHidden.image: Asset.Media.icShown.image, for: .normal)
+        
+        self.passwordTF.isSecureTextEntry.toggle()
+    }
+    
+    func rePasswordRightView() {
+        rePasswordRightButton.frame = CGRect(x: CGFloat(reenterPasswordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
+        rePasswordRightButton.setImage(Asset.Media.icHidden.image, for: .normal)
+        rePasswordRightButton.addTarget(self, action: #selector(onHideShowTappedForRePassword), for: .touchUpInside)
+        reenterPasswordTF.rightView = rePasswordRightButton
+        reenterPasswordTF.rightViewMode = .always
+    }
+    @objc func onHideShowTappedForRePassword() {
+        self.rePasswordRightButton.setImage(self.reenterPasswordTF.isSecureTextEntry == false ? Asset.Media.icHidden.image: Asset.Media.icShown.image, for: .normal)
+        
+        self.reenterPasswordTF.isSecureTextEntry.toggle()
+    }
 }
 
 extension SignUpVC {
@@ -288,7 +386,6 @@ extension SignUpVC {
         self.contentView.snp.makeConstraints { make in
             make.edges.equalTo(self.scrollView.snp.edges)
             make.width.equalTo(self.scrollView.snp.width)
-            make.height.equalTo(900)
         }
         
         self.titleLabel.snp.makeConstraints { make in
@@ -296,31 +393,49 @@ extension SignUpVC {
             make.left.equalTo(self.contentView.snp.left).offset(16)
         }
         
-        self.subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(8)
-            make.left.equalTo(self.titleLabel.snp.left)
-        }
-        
-        fullNameStack.addArrangedSubview(fullNameLabel)
-        fullNameStack.addArrangedSubview(fullNameTF)
-        self.fullNameStack.snp.makeConstraints { make in
-            make.top.equalTo(self.subtitleLabel.snp.bottom).offset(48)
+        nameStack.addArrangedSubview(nameLabel)
+        nameStack.addArrangedSubview(nameTF)
+        self.nameStack.snp.makeConstraints { make in
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
-        self.fullNameView.snp.makeConstraints { make in
+        nameTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
+        }
+        self.nameView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.fullNameStack.snp.bottom)
-            make.left.equalTo(self.fullNameStack.snp.left)
-            make.right.equalTo(self.fullNameStack.snp.right)
+            make.top.equalTo(self.nameStack.snp.bottom)
+            make.left.equalTo(self.nameStack.snp.left)
+            make.right.equalTo(self.nameStack.snp.right)
+        }
+        
+        surnameStack.addArrangedSubview(surnameLabel)
+        surnameStack.addArrangedSubview(surnameTF)
+        self.surnameStack.snp.makeConstraints { make in
+            make.top.equalTo(self.nameStack.snp.bottom).offset(24)
+            make.left.equalTo(self.contentView.snp.left).offset(24)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
+        }
+        surnameTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
+        }
+        self.surnameView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.top.equalTo(self.surnameStack.snp.bottom)
+            make.left.equalTo(self.surnameStack.snp.left)
+            make.right.equalTo(self.surnameStack.snp.right)
         }
         
         emailStack.addArrangedSubview(emailLabel)
         emailStack.addArrangedSubview(emailTF)
         self.emailStack.snp.makeConstraints { make in
-            make.top.equalTo(self.fullNameStack.snp.bottom).offset(24)
+            make.top.equalTo(self.surnameStack.snp.bottom).offset(24)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
+        }
+        emailTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
         }
         self.emailView.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -336,6 +451,12 @@ extension SignUpVC {
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
+        passwordTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
+        }
+        self.passwordRightButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+        }
         self.passwordView.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.top.equalTo(self.passwordStack.snp.bottom)
@@ -344,11 +465,17 @@ extension SignUpVC {
         }
         
         rePasswordStack.addArrangedSubview(rePasswordLabel)
-        rePasswordStack.addArrangedSubview(rePasswordTF)
+        rePasswordStack.addArrangedSubview(reenterPasswordTF)
         self.rePasswordStack.snp.makeConstraints { make in
             make.top.equalTo(self.passwordStack.snp.bottom).offset(24)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
+        }
+        reenterPasswordTF.snp.makeConstraints { make in
+            make.height.equalTo(32)
+        }
+        self.rePasswordRightButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
         }
         self.rePasswordView.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -359,15 +486,9 @@ extension SignUpVC {
         
         signUpButton.snp.makeConstraints { make in
             make.height.equalTo(48)
-            make.top.equalTo(self.rePasswordStack.snp.bottom).offset(80)
+            make.top.equalTo(self.rePasswordStack.snp.bottom).offset(46)
             make.left.equalTo(self.contentView.snp.left).offset(32)
             make.right.equalTo(self.contentView.snp.right).offset(-32)
-        }
-        
-        agreeLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.signUpButton.snp.left).offset(4)
-            make.right.equalTo(self.signUpButton.snp.right).offset(-4)
-            make.bottom.equalTo(self.signUpButton.snp.top).offset(-8)
         }
         
         self.signInLabel.snp.makeConstraints { make in

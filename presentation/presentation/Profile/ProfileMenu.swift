@@ -35,6 +35,11 @@ struct ProfileMenu {
             icon: Asset.Media.profilePhoneIcon.image.withTintColor(Asset.Colors.redWithDark.color)
         ),
         ProfileMenu(
+            title: "Dark Mode",
+            description: "",
+            icon: Asset.Media.icDark.image.withTintColor(Asset.Colors.redWithDark.color)
+        ),
+        ProfileMenu(
             title: "Logout",
             description: "",
             icon: Asset.Media.profileLogoutIcon.image)
