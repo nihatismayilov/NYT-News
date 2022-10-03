@@ -112,7 +112,7 @@ public class TabbarVC: BaseTabController<HomeViewModel>  {
                 guard let name = data["name"] as? String else {
                     return
                 }
-                
+                APPDefaults.remove(key: "UserName")
                 APPDefaults.setString(key: "UserName", value: name)
             }
             
@@ -125,7 +125,7 @@ public class TabbarVC: BaseTabController<HomeViewModel>  {
                 guard let surname = data["surname"] as? String else {
                     return
                 }
-                
+                APPDefaults.remove(key: "UserSurname")
                 APPDefaults.setString(key: "UserSurname", value: surname)
             }
             
@@ -138,7 +138,7 @@ public class TabbarVC: BaseTabController<HomeViewModel>  {
                 guard let mail = data["mail"] as? String else {
                     return
                 }
-                
+                APPDefaults.remove(key: "UserMail")
                 APPDefaults.setString(key: "UserMail", value: mail)
             }
             
@@ -151,7 +151,7 @@ public class TabbarVC: BaseTabController<HomeViewModel>  {
                 guard let password = data["password"] as? String else {
                     return
                 }
-                
+                APPDefaults.remove(key: "UserPassword")
                 APPDefaults.setString(key: "UserPassword", value: password)
             }
             
@@ -166,7 +166,7 @@ public class TabbarVC: BaseTabController<HomeViewModel>  {
                 }
                 do {
                     let decoder = try JSONDecoder().decode([DetailsModel].self, from: data)
-                    
+                    APPDefaults.remove(key: "FavoriteNews")
                     APPDefaults.setData(key: "FavoriteNews", value: data)
                     guard let savedData = APPDefaults.getData(key: "FavoriteNews") else { return }
                     

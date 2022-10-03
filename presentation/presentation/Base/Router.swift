@@ -26,6 +26,7 @@ public protocol RouterProtocol {
     func activityVC() -> ActivityVC
     func termsAndConditionsVC() -> TermsAndConditionsVC
     func privacyPolicyVC() -> PrivacyPolicyVC
+    func changeModeVC() -> ChangeModeVC
 }
 
 // MARK: - Parent
@@ -133,6 +134,13 @@ extension Router {
         let vc = PrivacyPolicyVC()
         vc.router = self
         vc.vm = resolver.resolve(PrivacyPolicyViewModel.self)
+        return vc
+    }
+    
+    public func changeModeVC() -> ChangeModeVC {
+        let vc = changeModeVC()
+        vc.router = self
+        vc.vm = resolver.resolve(HomeViewModel.self)
         return vc
     }
 }

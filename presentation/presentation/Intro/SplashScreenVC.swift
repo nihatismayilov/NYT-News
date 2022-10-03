@@ -24,8 +24,8 @@ public class SplashScreenVC: BaseVC<HomeViewModel> {
     }
     
     func changeView() {
-        let nextVC = self.router?.tabbarVC()
-        nextVC?.selectedIndex = 2
+        let nextVC = self.router?.signInVC()
+//        nextVC?.selectedIndex = 2
         nextVC?.modalTransitionStyle = .crossDissolve
         nextVC?.modalPresentationStyle = .fullScreen
         

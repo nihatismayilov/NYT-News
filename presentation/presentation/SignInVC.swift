@@ -8,11 +8,13 @@
 import UIKit
 import SnapKit
 import Firebase
+import Lottie
 
 public class SignInVC: BaseVC<SignInVM> {
     // MARK: - Variables
-    
-//    let database = Firestore.firestore() 
+        
+    var animationView = AnimationView()
+    var height: CGFloat? = nil
     
     // MARK: - UI Components
     private lazy var scrollView: UIScrollView = {
@@ -42,29 +44,24 @@ public class SignInVC: BaseVC<SignInVM> {
         return lbl
     }()
     
-    lazy var emailStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var emailImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icMail.image
         
-        return stack
-    }()
-    
-    lazy var emailLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Email"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var emailTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
         tf.keyboardType = .emailAddress
+        tf.autocapitalizationType = .none
+        tf.placeholder = "Email"
+        tf.delegate = self
+        tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         
         return tf
@@ -78,29 +75,24 @@ public class SignInVC: BaseVC<SignInVM> {
         return view
     }()
     
-    lazy var passwordStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var passwordImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icPassword.image
         
-        return stack
-    }()
-    
-    lazy var passwordLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Password"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var passwordTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
         tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
+        tf.placeholder = "Password"
+        tf.delegate = self
+        tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         
         return tf
@@ -126,22 +118,27 @@ public class SignInVC: BaseVC<SignInVM> {
         btn.setTitle("Sign In", for: .normal)
         btn.addTarget(self, action: #selector(onLoginTapped), for: .touchUpInside)
         
+        btn.layer.shadowOffset = CGSize(width: 0, height: 0)
+        btn.layer.shadowRadius = 4
+        btn.layer.shadowColor = Asset.Colors.shadowColor.color.cgColor
+        btn.layer.shadowOpacity = 0.7
+        
         return btn
     }()
     
     lazy var signUpLabel: UILabel = {
         let lbl = UILabel()
         self.contentView.addSubview(lbl)
-        lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 12)
+        lbl.font = UIFont(font: FontFamily.NunitoSans.semiBold, size: 14)
         lbl.textColor = .lightGray
         
         var firstAttributedString = NSMutableAttributedString()
-        firstAttributedString = NSMutableAttributedString(string: "Don't have an account? Sign Up")
-        firstAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 23, length: 7))
+        firstAttributedString = NSMutableAttributedString(string: "Not a member? Sign up")
+        firstAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 14, length: 7))
         
         var secondAS = NSMutableAttributedString()
         secondAS = firstAttributedString
-        secondAS.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 23, length: 7))
+        secondAS.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 14)  as Any, range: NSRange(location: 14, length: 7))
         
         lbl.isUserInteractionEnabled = true
         let signUpGesture = UITapGestureRecognizer(target: self, action: #selector(onSignUpTapped))
@@ -156,10 +153,12 @@ public class SignInVC: BaseVC<SignInVM> {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.tabbarColor.color
+        self.view.addSubview(animationView)
         self.setupUI()
         self.rightView()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:)))
+        tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
     }
     
@@ -177,19 +176,19 @@ public class SignInVC: BaseVC<SignInVM> {
     }
     
     // MARK: - Functions
+    
     @objc func onLoginTapped() {
         guard let email = emailTF.text, emailTF.hasText,
               let password = passwordTF.text, passwordTF.hasText else {
-            self.displayAlertMessage(messageToDisplay: "Some fields are empty, please fill them before continuing", title: "Error!")
+            self.displayAlertMessage(messageToDisplay: "", title: "Fields cannot be left empty")
             return
-            // show alert here
         }
         
         self.addActivity(frame: self.view.frame)
         
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             guard error == nil else {
-                self?.displayAlertMessage(messageToDisplay: error?.localizedDescription ?? "Unexpected error occured", title: "Error!")
+                self?.displayAlertMessage(messageToDisplay: error?.localizedDescription ?? "", title: "Unexpected error occured")
                 self?.removeActivity()
                 return
             }
@@ -201,7 +200,8 @@ public class SignInVC: BaseVC<SignInVM> {
     }
     
     func rightView() {
-        rightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
+        rightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(-5), width: CGFloat(25), height: CGFloat(25))
+        rightButton.tintColor = Asset.Colors.redWithDark.color
         rightButton.setImage(Asset.Media.icHidden.image, for: .normal)
         rightButton.addTarget(self, action: #selector(onHideShowTapped), for: .touchUpInside)
         passwordTF.rightView = rightButton
@@ -215,8 +215,8 @@ public class SignInVC: BaseVC<SignInVM> {
     
     @objc func onSignUpTapped(_ gesture: UITapGestureRecognizer) {
         guard let text = self.signUpLabel.text else { return }
-        let conditionsRange = (text as NSString).range(of: "Sign Up")
-        let cancellationRange = (text as NSString).range(of: "Don't have an account? ")
+        let conditionsRange = (text as NSString).range(of: "Sign up")
+        let cancellationRange = (text as NSString).range(of: "Not a member? ")
         
         if gesture.didTapAttributedTextInLabel(label: self.signUpLabel, inRange: conditionsRange) {
             let vc = self.router?.signUpVC()
@@ -226,14 +226,44 @@ public class SignInVC: BaseVC<SignInVM> {
             // empty
         }
     }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
+}
+
+extension SignInVC: UITextFieldDelegate {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.emailTF {
+            self.emailView.backgroundColor = Asset.Colors.accentColor.color
+        } else if textField == self.passwordTF {
+            self.passwordView.backgroundColor = Asset.Colors.accentColor.color
+        }
+        self.contentView.snp.makeConstraints { make in
+            make.height.equalTo(250 + self.contentView.frame.size.height)
+        }
     }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.emailTF {
+            self.emailView.backgroundColor = .lightGray
+        } else if textField == self.passwordTF {
+            self.passwordView.backgroundColor = .lightGray
+        }
+//        self.contentView.snp.makeConstraints { make in
+//            make.height.equalTo(self.contentView.frame.size.height - 250)
+//        }
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
 }
 
 extension SignInVC {
     func setupUI() {
+        animationView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.snp.edges)
+        }
+        
         self.scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -246,39 +276,40 @@ extension SignInVC {
             make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(56)
             make.left.equalTo(self.contentView.snp.left).offset(16)
         }
-        
-        emailStack.addArrangedSubview(emailLabel)
-        emailStack.addArrangedSubview(emailTF)
-        self.emailStack.snp.makeConstraints { make in
+        emailImage.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
             make.top.equalTo(self.titleLabel.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         emailTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.emailImage.snp.centerY)
+            make.left.equalTo(self.emailImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.emailView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.emailStack.snp.bottom)
-            make.left.equalTo(self.emailStack.snp.left)
-            make.right.equalTo(self.emailStack.snp.right)
+            make.top.equalTo(self.emailTF.snp.bottom)
+            make.left.equalTo(self.emailTF.snp.left)
+            make.right.equalTo(self.emailTF.snp.right)
         }
         
-        passwordStack.addArrangedSubview(passwordLabel)
-        passwordStack.addArrangedSubview(passwordTF)
-        self.passwordStack.snp.makeConstraints { make in
-            make.top.equalTo(self.emailStack.snp.bottom).offset(24)
+        passwordImage.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalTo(self.emailView.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         passwordTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.passwordImage.snp.centerY)
+            make.left.equalTo(self.passwordImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.passwordView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.passwordStack.snp.bottom)
-            make.left.equalTo(self.passwordStack.snp.left)
-            make.right.equalTo(self.passwordStack.snp.right)
+            make.top.equalTo(self.passwordTF.snp.bottom)
+            make.left.equalTo(self.passwordTF.snp.left)
+            make.right.equalTo(self.passwordTF.snp.right)
         }
         self.rightButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
@@ -286,15 +317,26 @@ extension SignInVC {
         
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(48)
-            make.top.equalTo(self.passwordStack.snp.bottom).offset(64)
+            make.top.equalTo(self.passwordView.snp.bottom).offset(64)
             make.left.equalTo(self.contentView.snp.left).offset(24)
             make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         
         self.signUpLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self.loginButton.snp.centerX)
-            make.top.equalTo(self.loginButton.snp.bottom).offset(16)
+            make.top.equalTo(self.loginButton.snp.bottom).offset(24)
             make.bottom.lessThanOrEqualTo(self.contentView.snp.bottom).offset(-32)
         }
+    }
+}
+
+extension SignInVC {
+    func startAnimation() {
+        animationView.animation = Animation.named("loginBack2")
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.play()
+        animationView.layer.cornerRadius = 16
+
     }
 }

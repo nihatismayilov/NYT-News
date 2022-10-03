@@ -49,8 +49,9 @@ public class HomeVC: BaseVC<HomeViewModel> {
         self.tableView.isHidden = true
         self.savePersonalData()
         
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: Asset.Media.newsLogo.image.withRenderingMode(.alwaysOriginal),
+            image: Asset.Media.icIcon.image.withRenderingMode(.alwaysOriginal),
             style: .done,
             target: self,
             action: #selector(onLogoTapped))
@@ -62,11 +63,6 @@ public class HomeVC: BaseVC<HomeViewModel> {
             action: #selector(onProfileTapped))
         
         self.getNews()
-        
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            self.removeActivity()
-//        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -97,8 +93,9 @@ public class HomeVC: BaseVC<HomeViewModel> {
     
     func getNews() {
         if Reachability.isConnectedToNetwork() {
+            
             self.addActivity(frame: self.view.frame)
-            self.vm?.getCategorizedNews(with: "world").then({ news in
+            self.vm?.getCategorizedNews(with: "us").then({ news in
                 if let news = news.results {
                     self.allCategorizedNews = news
                     self.filteredCategorizedNews = news
@@ -109,6 +106,7 @@ public class HomeVC: BaseVC<HomeViewModel> {
                         self.breakingNews = results
                         self.tableView.reloadData()
                         self.tableView.isHidden = false
+                        self.tabBarController?.tabBar.isHidden = false
                         self.removeActivity()
                     }
                 })
@@ -159,7 +157,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             headerCell.collectionView.reloadData()
             
             headerCell.rowSelectedCompletion = { index in
-                let vc = self.router?.detailsVC(details: DetailsModel(image: self.breakingNews[index].media?.first?.mediaMetaData?.last?.url, title: self.breakingNews[index].title, description: self.breakingNews[index].abstract, writtenBy: self.breakingNews[index].byline, category: self.breakingNews[index].category, webUrl: self.breakingNews[index].url, id: "\(String(describing: self.breakingNews[index].id))", pubDate: self.breakingNews[index].updateDate))
+                let vc = self.router?.detailsVC(details: DetailsModel(image: self.breakingNews[index].media?.first?.mediaMetaData?.last?.url, title: self.breakingNews[index].title, description: self.breakingNews[index].abstract, writtenBy: self.breakingNews[index].byline, category: self.breakingNews[index].category, webUrl: self.breakingNews[index].url, id: "\(String(describing: self.breakingNews[index].id))", pubDate: self.breakingNews[index].updateDate?.toDateS?.toStringWithTime.getFormattedDateDayMonthYearHour()))
                 vc!.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(vc!, animated: true)
             }
@@ -168,7 +166,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         case 1:
             tableView.register(CategoriesCell.self, forCellReuseIdentifier: CategoriesCell.identifier)
             let categoriesCell = tableView.dequeueReusableCell(withIdentifier: CategoriesCell.identifier, for: indexPath) as! CategoriesCell
-            categoriesCell.contentView.layoutIfNeeded()
             
             categoriesCell.selectCategoryCompletion = { index in
                 
@@ -185,7 +182,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         case 2:
             tableView.register(CategorizedCell.self, forCellReuseIdentifier: CategorizedCell.identifier)
             let categorizedCell = tableView.dequeueReusableCell(withIdentifier: CategorizedCell.identifier) as! CategorizedCell
-            categorizedCell.contentView.layoutIfNeeded()
             
             categorizedCell.setupCellWith(categorizedNews: self.filteredCategorizedNews[indexPath.row])
             
@@ -205,7 +201,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             self.tableView.deselectRow(at: indexPath, animated: false)
         case 2:
             self.tableView.deselectRow(at: indexPath, animated: true)
-            let vc = self.router?.detailsVC(details: DetailsModel(image: self.filteredCategorizedNews[indexPath.row].multimedia?.last?.url, title: self.filteredCategorizedNews[indexPath.row].title, description: self.filteredCategorizedNews[indexPath.row].abstract, writtenBy: self.breakingNews[indexPath.row].byline, category: self.filteredCategorizedNews[indexPath.row].category, webUrl: self.filteredCategorizedNews[indexPath.row].url, id: nil, pubDate: self.filteredCategorizedNews[indexPath.row].publishedDate))
+            let vc = self.router?.detailsVC(details: DetailsModel(image: self.filteredCategorizedNews[indexPath.row].multimedia?.first?.url, title: self.filteredCategorizedNews[indexPath.row].title, description: self.filteredCategorizedNews[indexPath.row].abstract, writtenBy: self.breakingNews[indexPath.row].byline, category: self.filteredCategorizedNews[indexPath.row].category, webUrl: self.filteredCategorizedNews[indexPath.row].url, id: nil, pubDate: self.filteredCategorizedNews[indexPath.row].publishedDate?.toDateM?.toStringWithTime.getFormattedDateDayMonthYearHour()))
             vc?.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc!, animated: true)
         default:

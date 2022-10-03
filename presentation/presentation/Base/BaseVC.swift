@@ -19,6 +19,7 @@ public class BaseVC<VM>: UIViewController {
     func addActivity(frame: CGRect?) {
         let vc = router?.activityVC()
         vc?.alpha = 0.3
+        vc?.hidesBottomBarWhenPushed = true
         self.add(vc!, frame: frame)
     }
     

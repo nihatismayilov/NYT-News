@@ -99,7 +99,7 @@ extension CategoriesCell: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionCell.identifier, for: indexPath) as! CategoriesCollectionCell
         
-        cell.contentView.backgroundColor = categoriesArray[indexPath.row]
+        cell.categoryView.backgroundColor = categoriesArray[indexPath.row]
 //        cell.backgroundColor = .systemBlue
 //        cell.completion = {
 //            cell.categoryView.backgroundColor = Asset.Colors.dateColor.color

@@ -155,9 +155,8 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         case 4:
             break
         case 5:
-//            self.displayAlertMessage(messageToDisplay: "Do you want to sign out?", title: "")
             
-            let alert = UIAlertController(title: "Are you sure?", message: "You're leaving so soon", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Are you sure you want to logout?", message: "", preferredStyle: .alert)
             
             let closeBtn = UIAlertAction(title: "Close", style: .cancel)
             let logoutBtn = UIAlertAction(title: "Log out", style: .destructive) {

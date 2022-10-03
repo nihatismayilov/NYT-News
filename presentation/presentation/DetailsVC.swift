@@ -41,9 +41,12 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     
     lazy var backView: UIView = {
         let view = UIView()
-        self.contentView.addSubview(view)
+        self.view.addSubview(view)
         view.backgroundColor = .black.withAlphaComponent(0.5)
         view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(onBackTapped))
+        view.addGestureRecognizer(gesture)
         
         return view
     }()
@@ -58,9 +61,12 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     
     lazy var saveView: UIView = {
         let view = UIView()
-        self.contentView.addSubview(view)
+        self.view.addSubview(view)
         view.backgroundColor = .black.withAlphaComponent(0.5)
         view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(onSaveTapped))
+        view.addGestureRecognizer(gesture)
         
         return view
     }()
@@ -79,9 +85,12 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     
     lazy var shareView: UIView = {
         let view = UIView()
-        self.contentView.addSubview(view)
+        self.view.addSubview(view)
         view.backgroundColor = .black.withAlphaComponent(0.5)
         view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(onShareTapped))
+        view.addGestureRecognizer(gesture)
         
         return view
     }()
@@ -226,11 +235,7 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
             self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
             return
         }
-//        if let detail = self.details, DetailsHelper.shared.detailsModelArray?.contains(detail) == true {
-//            self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
-//        } else {
-//            self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
-//        }
+
         
         let filteredModel = DetailsHelper.shared.detailsModelArray?.filter({ model in
             if model.title == self.details?.title {
@@ -245,70 +250,16 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
         } else {
             self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
         }
-//        do {
-//            if let data = APPDefaults.getData(key: "FavoriteNews") {
-//                let decoder = try JSONDecoder().decode([DetailsModel].self, from: data)
-//                DetailsHelper.shared.detailsModelArray = decoder
-//
-//                let checkingDetail = DetailsHelper.shared.detailsModelArray?.filter({ detail in
-//                    if detail == self.details {
-//                        return true
-//                    } else {
-//                        return false
-//                    }
-//                })
-//                if checkingDetail?.isEmpty == false {
-//                    self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
-//                } else {
-//                    self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
-//                }
-////                if ((DetailsHelper.shared.detailsModelArray?.contains(self.details!)) != nil) {
-////                    self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
-////                } else {
-////                    self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
-////                }
-//            } else {
-//                print("")
-//            }
-//        } catch {
-//            print("Couldn't")
-//        }
-        
-//
-//        DetailsHelper.shared.detailsModelArray?.forEach({ detail in
-//            print("HERE \(detail)")
-//            if detail == self.details {
-//
-//                return
-//            } else {
-//                //                    self.animationFirstState()
-//            }
-//        })
-        
-        //        if DetailsHelper.shared.detailsModelArray?.contains(where: { detail in
-        //
-        //        })
-        //        if DetailsHelper.shared.detailsModelArray?.contains(where: { details in
-        //            if details == self.details {
-        //                self.animationLastState()
-        //                return true
-        //            } else {
-        //                self.animationFirstState()
-        //                return false
-        //            }
-        //        })
     }
     // MARK: - Functions
     
     @objc func onSaveTapped() {
-        
         
         DetailsHelper.shared.detailsModelArray?.forEach({ detail in
             if self.details == detail {
                 self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
                 return
             } else {
-                //                    self.animationFirstState()
                 self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
             }
         })
@@ -317,20 +268,11 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
             
             DetailsHelper.shared.detailsModelArray?.remove(at: idIndex)
             self.saveButton.setImage(Asset.Media.saveEmpty.image, for: .normal)
-            //            self.startAnimationBackward()
         } else {
             DetailsHelper.shared.detailsModelArray?.append(self.details!)
             self.saveButton.setImage(Asset.Media.saveFilled.image, for: .normal)
-            //            self.startAnimation()
-            //                    self.animationView.stop()
         }
         
-//        do {
-//            let data = try JSONEncoder().encode(DetailsHelper.shared.detailsModelArray)
-//            APPDefaults.setData(key: "FavoriteNews", value: data)
-//        } catch {
-//            print("Couldn't save news to appDefaults")
-//        }
         if let uuid = Firebase.Auth.auth().currentUser?.uid {
             do {
                 let data = try JSONEncoder().encode(DetailsHelper.shared.detailsModelArray)
@@ -379,8 +321,11 @@ public class DetailsVC: BaseVC<DetailsViewModel>, UIGestureRecognizerDelegate {
     @objc func onUrlTapped() {
         
         if let link = sharedLink {
-            let svc = SFSafariViewController(url: URL.init(string: link)!)
-            present(svc, animated: true, completion: nil)
+            let url = URL(string: link)!
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let safariVC = SFSafariViewController(url: url, configuration: config)
+            present(safariVC, animated: true, completion: nil)
         }
     }
     
@@ -496,8 +441,8 @@ extension DetailsVC {
         
         self.backView.layer.cornerRadius = 10
         self.backView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(24)
+            make.left.equalTo(self.view.snp.left).offset(24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(24)
             make.width.height.equalTo(40)
         }
         
@@ -509,7 +454,7 @@ extension DetailsVC {
         self.saveView.layer.cornerRadius = 10
         self.saveView.snp.makeConstraints { make in
             make.right.equalTo(self.shareView.snp.left).offset(-16)
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(24)
             make.width.height.equalTo(40)
         }
         
@@ -525,8 +470,8 @@ extension DetailsVC {
         
         self.shareView.layer.cornerRadius = 10
         self.shareView.snp.makeConstraints { make in
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide.snp.top).offset(24)
+            make.right.equalTo(self.view.snp.right).offset(-24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(24)
             make.width.height.equalTo(40)
         }
         

@@ -86,7 +86,7 @@ extension ExploreVC: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.searchTableView.deselectRow(at: indexPath, animated: true)
         print("LLL: \(self.searchedNews[indexPath.row].multimedia?.last?.url)")
-        let model = DetailsModel(image: "https://static01.nyt.com/\(self.searchedNews[indexPath.row].multimedia?.last?.url ?? "")", title: self.searchedNews[indexPath.row].headline?.main, description: self.searchedNews[indexPath.row].abstract, writtenBy: self.searchedNews[indexPath.row].byline?.original, category: self.searchedNews[indexPath.row].category, webUrl: self.searchedNews[indexPath.row].webURL, id: self.searchedNews[indexPath.row].id, pubDate: self.searchedNews[indexPath.row].pubDate)
+        let model = DetailsModel(image: "https://static01.nyt.com/\(self.searchedNews[indexPath.row].multimedia?.last?.url ?? "")", title: self.searchedNews[indexPath.row].headline?.main, description: self.searchedNews[indexPath.row].abstract, writtenBy: self.searchedNews[indexPath.row].byline?.original, category: self.searchedNews[indexPath.row].category, webUrl: self.searchedNews[indexPath.row].webURL, id: self.searchedNews[indexPath.row].id, pubDate: self.searchedNews[indexPath.row].pubDate?.toDateL?.toStringWithTime.getFormattedDateDayMonthYearHour())
 
         let vc = self.router?.detailsVC(details: model)
         vc?.hidesBottomBarWhenPushed = true
@@ -95,22 +95,28 @@ extension ExploreVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ExploreVC: UISearchBarDelegate {
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText != "" {
-            searchTimer.invalidate() //Cancel old request if any
-            self.searchedText = searchText
-            searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(searchRequestSent), userInfo: searchText, repeats: false)
-            print("Searching for \(searchText) scheduled")
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchedText = self.searchBar.text!
+        if self.searchedText != "" {
+            self.searchRequestSent(text: self.searchedText)
         } else {
             self.searchedNews.removeAll()
             self.searchTableView.reloadData()
         }
     }
+//    public func searchBarShoudReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return true
+//    }
     
-    @objc func searchRequestSent() {
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+    }
+    
+    @objc func searchRequestSent(text: String) {
         self.searchedNews.removeAll()
         self.addActivity(frame: (self.view.frame.standardized))
-        let searchText = self.searchedText
+        let searchText = text
         print("Searching for \(searchText) actually fired!")
         
         let query = searchText.replacingOccurrences(of: " ", with: "%20")

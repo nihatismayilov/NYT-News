@@ -7,21 +7,33 @@
 
 import Foundation
 
-public struct SearchNews {
+public struct SearchNews: Equatable {
+    public static func == (lhs: SearchNews, rhs: SearchNews) -> Bool {
+        lhs.response == rhs.response
+    }
+    
     public let response: Response?
     
     public init(response: SearchNews.Response) {
         self.response = response
     }
     
-    public struct Response {
+    public struct Response: Equatable {
+        public static func == (lhs: SearchNews.Response, rhs: SearchNews.Response) -> Bool {
+            lhs.docs == rhs.docs
+        }
+        
         public let docs: [Doc]?
         
         public init(docs: [SearchNews.Response.Doc]) {
             self.docs = docs
         }
         
-        public struct Doc {
+        public struct Doc: Equatable {
+            public static func == (lhs: SearchNews.Response.Doc, rhs: SearchNews.Response.Doc) -> Bool {
+                lhs.id == rhs.id
+            }
+            
             public let abstract: String?
             public let webURL: String?
             public let multimedia: [Multimedia]?

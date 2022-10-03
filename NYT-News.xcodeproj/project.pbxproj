@@ -25,6 +25,8 @@
 		B8EEFD0B28C1DF3C0057990E /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B859504028BCADEF0072E95A /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B8EEFD0C28C1DF3C0057990E /* presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B859502628BCADCC0072E95A /* presentation.framework */; };
 		B8EEFD0D28C1DF3C0057990E /* presentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B859502628BCADCC0072E95A /* presentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8F2848728E5A7B2005644DA /* loginBack.json in Resources */ = {isa = PBXBuildFile; fileRef = B8F2848628E5A7B2005644DA /* loginBack.json */; };
+		B8F2848928E5A880005644DA /* loginBack2.json in Resources */ = {isa = PBXBuildFile; fileRef = B8F2848828E5A880005644DA /* loginBack2.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		B8BDD14028BA4CD0006BC557 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8BDD14228BA4CD0006BC557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C5EB1628D72E60008B617D /* launch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = launch.json; sourceTree = "<group>"; };
+		B8F2848628E5A7B2005644DA /* loginBack.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loginBack.json; sourceTree = "<group>"; };
+		B8F2848828E5A880005644DA /* loginBack2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loginBack2.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,8 @@
 				B8A51ECA28D4829900FFDCED /* search.json */,
 				B87D576E28D0CE7100686B90 /* blank.json */,
 				B8C5EB1628D72E60008B617D /* launch.json */,
+				B8F2848628E5A7B2005644DA /* loginBack.json */,
+				B8F2848828E5A880005644DA /* loginBack2.json */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -294,12 +300,14 @@
 			files = (
 				B87D576F28D0CE7200686B90 /* blank.json in Resources */,
 				B82F76E828CF5A78000FD2BB /* ImageAsset.xcassets in Resources */,
+				B8F2848928E5A880005644DA /* loginBack2.json in Resources */,
 				B864DBBF28D6100300948E2D /* loading.json in Resources */,
 				B8A51ECB28D4829900FFDCED /* search.json in Resources */,
 				B8AE9C7528DEEEE400DFCECE /* save.json in Resources */,
 				B8C5EB1B28D72E61008B617D /* launch.json in Resources */,
 				B87D577528D0D14700686B90 /* noFavoritesDark.json in Resources */,
 				B8BDD14128BA4CD0006BC557 /* LaunchScreen.storyboard in Resources */,
+				B8F2848728E5A7B2005644DA /* loginBack.json in Resources */,
 				B87374F628DA141700984340 /* GoogleService-Info.plist in Resources */,
 				B87D577328D0D07B00686B90 /* noFavorites.json in Resources */,
 				B87D575F28D0739900686B90 /* lottie_star.json in Resources */,

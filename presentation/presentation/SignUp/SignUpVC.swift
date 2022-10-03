@@ -47,28 +47,23 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return lbl
     }()
     
-    lazy var nameStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var nameImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icName.image
         
-        return stack
-    }()
-    
-    lazy var nameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Name"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var nameTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
+        tf.placeholder = "Name"
+        tf.delegate = self
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -81,28 +76,23 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return view
     }()
     
-    lazy var surnameStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var surnameImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icName.image
         
-        return stack
-    }()
-    
-    lazy var surnameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Surname"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var surnameTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
+        tf.placeholder = "Surname"
+        tf.delegate = self
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         
         return tf
     }()
@@ -115,29 +105,25 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return view
     }()
     
-    lazy var emailStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var emailImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icMail.image
         
-        return stack
-    }()
-    
-    lazy var emailLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Email"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var emailTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
         tf.keyboardType = .emailAddress
+        tf.autocapitalizationType = .none
+        tf.placeholderRect(forBounds: CGRect(x: 0, y: 0, width: 10, height: 10))
+        tf.placeholder = "Mail"
+        tf.delegate = self
+        tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         
         return tf
@@ -151,29 +137,24 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return view
     }()
     
-    lazy var passwordStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var passwordImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icPassword.image
         
-        return stack
-    }()
-    
-    lazy var passwordLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Password"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var passwordTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
         tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
+        tf.placeholder = "Password"
+        tf.delegate = self
+        tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         
         return tf
@@ -187,35 +168,30 @@ public class SignUpVC: BaseVC<SignUpVM> {
         return view
     }()
     
-    lazy var rePasswordStack: UIStackView = {
-        let stack = UIStackView()
-        self.contentView.addSubview(stack)
-        stack.axis = .vertical
-        stack.spacing = 2
-        stack.distribution = .equalSpacing
+    lazy var reenterPasswordImage: UIImageView = {
+        let img = UIImageView()
+        self.contentView.addSubview(img)
+        img.tintColor = Asset.Colors.redWithDark.color
+        img.image = Asset.Media.icPassword.image
         
-        return stack
-    }()
-    
-    lazy var rePasswordLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Re-enter your Password"
-        lbl.textColor = Asset.Colors.accentColor.color
-        lbl.font = UIFont(font: FontFamily.NunitoSans.bold, size: 16)
-        
-        return lbl
+        return img
     }()
     
     lazy var reenterPasswordTF: UITextField = {
         let tf = UITextField()
+        self.contentView.addSubview(tf)
         tf.textColor = Asset.Colors.textColor.color
         tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
+        tf.placeholder = "Re-enter password"
+        tf.delegate = self
+        tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         
         return tf
     }()
     
-    lazy var rePasswordView: UIView = {
+    lazy var reenterPasswordView: UIView = {
         let view = UIView()
         self.contentView.addSubview(view)
         view.backgroundColor = .lightGray
@@ -233,6 +209,11 @@ public class SignUpVC: BaseVC<SignUpVM> {
         btn.setTitle("Create Account", for: .normal)
         btn.addTarget(self, action: #selector(onCreateTapped), for: .touchUpInside)
         
+        btn.layer.shadowOffset = CGSize(width: 0, height: 0)
+        btn.layer.shadowRadius = 4
+        btn.layer.shadowColor = UIColor.systemRed.cgColor
+        btn.layer.shadowOpacity = 0.7
+        
         return btn
     }()
     
@@ -243,12 +224,12 @@ public class SignUpVC: BaseVC<SignUpVM> {
         lbl.textColor = .lightGray
         
         var firstAttributedString = NSMutableAttributedString()
-        firstAttributedString = NSMutableAttributedString(string: "Already have an account? Sign In")
-        firstAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 25, length: 7))
+        firstAttributedString = NSMutableAttributedString(string: "Already a member? Sign in")
+        firstAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Asset.Colors.accentColor.color as Any, range: NSRange(location: 18, length: 7))
         
         var secondAS = NSMutableAttributedString()
         secondAS = firstAttributedString
-        secondAS.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 25, length: 7))
+        secondAS.addAttribute(NSAttributedString.Key.font, value: UIFont(font: FontFamily.NunitoSans.bold, size: 12)  as Any, range: NSRange(location: 18, length: 7))
         
         lbl.isUserInteractionEnabled = true
         let signUpGesture = UITapGestureRecognizer(target: self, action: #selector(onSignInTapped))
@@ -264,9 +245,11 @@ public class SignUpVC: BaseVC<SignUpVM> {
         super.viewDidLoad()
         self.view.backgroundColor = Asset.Colors.tabbarColor.color
         self.setupUI()
-//        self.rightView()
+        self.passwordRightView()
+        self.rePasswordRightView()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:)))
+        tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
     }
     
@@ -316,18 +299,14 @@ public class SignUpVC: BaseVC<SignUpVM> {
     
     @objc func onSignInTapped(_ gesture: UITapGestureRecognizer) {
         guard let text = self.signInLabel.text else { return }
-        let conditionsRange = (text as NSString).range(of: "Sign In")
-        let cancellationRange = (text as NSString).range(of: "Already have an account? ")
+        let conditionsRange = (text as NSString).range(of: "Sign in")
+        let cancellationRange = (text as NSString).range(of: "Already a member? ")
         
         if gesture.didTapAttributedTextInLabel(label: self.signInLabel, inRange: conditionsRange) {
             self.dismiss(animated: true)
         } else if gesture.didTapAttributedTextInLabel(label: self.signInLabel, inRange: cancellationRange) {
             // empty
         }
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
     
     func saveProfile(id: String ,name: String, surname: String, mail: String, password: String) {
@@ -353,6 +332,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
     
     func passwordRightView() {
         passwordRightButton.frame = CGRect(x: CGFloat(passwordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
+        passwordRightButton.tintColor = Asset.Colors.redWithDark.color
         passwordRightButton.setImage(Asset.Media.icHidden.image, for: .normal)
         passwordRightButton.addTarget(self, action: #selector(onHideShowTappedForPassword), for: .touchUpInside)
         passwordTF.rightView = passwordRightButton
@@ -366,6 +346,7 @@ public class SignUpVC: BaseVC<SignUpVM> {
     
     func rePasswordRightView() {
         rePasswordRightButton.frame = CGRect(x: CGFloat(reenterPasswordTF.frame.size.width - 25), y: CGFloat(0), width: CGFloat(25), height: CGFloat(25))
+        rePasswordRightButton.tintColor = Asset.Colors.redWithDark.color
         rePasswordRightButton.setImage(Asset.Media.icHidden.image, for: .normal)
         rePasswordRightButton.addTarget(self, action: #selector(onHideShowTappedForRePassword), for: .touchUpInside)
         reenterPasswordTF.rightView = rePasswordRightButton
@@ -378,6 +359,41 @@ public class SignUpVC: BaseVC<SignUpVM> {
     }
 }
 
+extension SignUpVC: UITextFieldDelegate {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.nameTF {
+            self.nameView.backgroundColor = Asset.Colors.accentColor.color
+        } else if textField == self.surnameTF {
+            self.surnameView.backgroundColor = Asset.Colors.accentColor.color
+        } else if textField == self.emailTF {
+            self.emailView.backgroundColor = Asset.Colors.accentColor.color
+        } else if textField == self.passwordTF {
+            self.passwordView.backgroundColor = Asset.Colors.accentColor.color
+        } else if textField == self.reenterPasswordTF {
+            self.reenterPasswordView.backgroundColor = Asset.Colors.accentColor.color
+        }
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.nameTF {
+            self.nameView.backgroundColor = .lightGray
+        } else if textField == self.surnameTF {
+            self.surnameView.backgroundColor = .lightGray
+        } else if textField == self.emailTF {
+            self.emailView.backgroundColor = .lightGray
+        } else if textField == self.passwordTF {
+            self.passwordView.backgroundColor = .lightGray
+        } else if textField == self.reenterPasswordTF {
+            self.reenterPasswordView.backgroundColor = .lightGray
+        }
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+}
+
 extension SignUpVC {
     func setupUI() {
         self.scrollView.snp.makeConstraints { make in
@@ -386,6 +402,7 @@ extension SignUpVC {
         self.contentView.snp.makeConstraints { make in
             make.edges.equalTo(self.scrollView.snp.edges)
             make.width.equalTo(self.scrollView.snp.width)
+//            make.height.equalTo(self.scrollView.snp.height)
         }
         
         self.titleLabel.snp.makeConstraints { make in
@@ -393,100 +410,99 @@ extension SignUpVC {
             make.left.equalTo(self.contentView.snp.left).offset(16)
         }
         
-        nameStack.addArrangedSubview(nameLabel)
-        nameStack.addArrangedSubview(nameTF)
-        self.nameStack.snp.makeConstraints { make in
+        nameImage.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
             make.top.equalTo(self.titleLabel.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         nameTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.nameImage.snp.centerY)
+            make.left.equalTo(self.nameImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.nameView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.nameStack.snp.bottom)
-            make.left.equalTo(self.nameStack.snp.left)
-            make.right.equalTo(self.nameStack.snp.right)
+            make.top.equalTo(self.nameTF.snp.bottom)
+            make.left.equalTo(self.nameTF.snp.left)
+            make.right.equalTo(self.nameTF.snp.right)
         }
         
-        surnameStack.addArrangedSubview(surnameLabel)
-        surnameStack.addArrangedSubview(surnameTF)
-        self.surnameStack.snp.makeConstraints { make in
-            make.top.equalTo(self.nameStack.snp.bottom).offset(24)
+        surnameImage.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalTo(self.nameView.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         surnameTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.surnameImage.snp.centerY)
+            make.left.equalTo(self.surnameImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.surnameView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.surnameStack.snp.bottom)
-            make.left.equalTo(self.surnameStack.snp.left)
-            make.right.equalTo(self.surnameStack.snp.right)
+            make.top.equalTo(self.surnameTF.snp.bottom)
+            make.left.equalTo(self.surnameTF.snp.left)
+            make.right.equalTo(self.surnameTF.snp.right)
         }
         
-        emailStack.addArrangedSubview(emailLabel)
-        emailStack.addArrangedSubview(emailTF)
-        self.emailStack.snp.makeConstraints { make in
-            make.top.equalTo(self.surnameStack.snp.bottom).offset(24)
+        emailImage.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
+            make.top.equalTo(self.surnameView.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         emailTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.emailImage.snp.centerY)
+            make.left.equalTo(self.emailImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.emailView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.emailStack.snp.bottom)
-            make.left.equalTo(self.emailStack.snp.left)
-            make.right.equalTo(self.emailStack.snp.right)
+            make.top.equalTo(self.emailTF.snp.bottom)
+            make.left.equalTo(self.emailTF.snp.left)
+            make.right.equalTo(self.emailTF.snp.right)
         }
         
-        passwordStack.addArrangedSubview(passwordLabel)
-        passwordStack.addArrangedSubview(passwordTF)
-        self.passwordStack.snp.makeConstraints { make in
-            make.top.equalTo(self.emailStack.snp.bottom).offset(24)
+        passwordImage.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalTo(self.emailView.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         passwordTF.snp.makeConstraints { make in
             make.height.equalTo(32)
-        }
-        self.passwordRightButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.centerY.equalTo(self.passwordImage.snp.centerY)
+            make.left.equalTo(self.passwordImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         self.passwordView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.passwordStack.snp.bottom)
-            make.left.equalTo(self.passwordStack.snp.left)
-            make.right.equalTo(self.passwordStack.snp.right)
+            make.top.equalTo(self.passwordTF.snp.bottom)
+            make.left.equalTo(self.passwordTF.snp.left)
+            make.right.equalTo(self.passwordTF.snp.right)
         }
         
-        rePasswordStack.addArrangedSubview(rePasswordLabel)
-        rePasswordStack.addArrangedSubview(reenterPasswordTF)
-        self.rePasswordStack.snp.makeConstraints { make in
-            make.top.equalTo(self.passwordStack.snp.bottom).offset(24)
+        reenterPasswordImage.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalTo(self.passwordView.snp.bottom).offset(48)
             make.left.equalTo(self.contentView.snp.left).offset(24)
-            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
         reenterPasswordTF.snp.makeConstraints { make in
             make.height.equalTo(32)
+            make.centerY.equalTo(self.reenterPasswordImage.snp.centerY)
+            make.left.equalTo(self.reenterPasswordImage.snp.right).offset(8)
+            make.right.equalTo(self.contentView.snp.right).offset(-24)
         }
-        self.rePasswordRightButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
-        }
-        self.rePasswordView.snp.makeConstraints { make in
+        self.reenterPasswordView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.top.equalTo(self.rePasswordStack.snp.bottom)
-            make.left.equalTo(self.rePasswordStack.snp.left)
-            make.right.equalTo(self.rePasswordStack.snp.right)
+            make.top.equalTo(self.reenterPasswordTF.snp.bottom)
+            make.left.equalTo(self.reenterPasswordTF.snp.left)
+            make.right.equalTo(self.reenterPasswordTF.snp.right)
         }
         
         signUpButton.snp.makeConstraints { make in
             make.height.equalTo(48)
-            make.top.equalTo(self.rePasswordStack.snp.bottom).offset(46)
+            make.top.equalTo(self.reenterPasswordView.snp.bottom).offset(46)
             make.left.equalTo(self.contentView.snp.left).offset(32)
             make.right.equalTo(self.contentView.snp.right).offset(-32)
         }

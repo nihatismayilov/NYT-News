@@ -57,6 +57,7 @@ class CategoriesCollectionCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12
 //        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
+        
         contentView.snp.makeConstraints { make in
             make.left.equalTo(self.snp.left)
             make.right.equalTo(self.snp.right)
@@ -83,7 +84,7 @@ class CategoriesCollectionCell: UICollectionViewCell {
         self.categoryView.clipsToBounds = true
         self.categoryView.layer.cornerRadius = 12
         self.categoryView.snp.makeConstraints { make in
-            make.left.equalTo(self.contentView.snp.left)
+            make.left.equalTo(self.contentView.snp.left).offset(8)
             make.right.equalTo(self.contentView.snp.right)
             make.top.equalTo(self.contentView.snp.top)
             make.bottom.equalTo(self.contentView.snp.bottom)

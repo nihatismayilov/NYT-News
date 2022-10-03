@@ -7,14 +7,22 @@
 
 import Foundation
 
-public struct CategorizedNews {
+public struct CategorizedNews: Equatable {
+    public static func == (lhs: CategorizedNews, rhs: CategorizedNews) -> Bool {
+        lhs.results == rhs.results
+    }
+    
     public let results: [Results]?
     
     public init(results: [CategorizedNews.Results]) {
         self.results = results
     }
     
-    public struct Results {
+    public struct Results: Equatable {
+        public static func == (lhs: CategorizedNews.Results, rhs: CategorizedNews.Results) -> Bool {
+            lhs.title == rhs.title
+        }
+        
         public let category: String?
         public let subCategory, title, abstract: String?
         public let url: String?

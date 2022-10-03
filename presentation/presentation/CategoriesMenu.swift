@@ -14,8 +14,8 @@ struct CategoriesMenu {
     var backColor: UIColor
     
     static var items = [
-        CategoriesMenu(title: "World", isSelected: false, backColor: Asset.Colors.redColor.color),
-        CategoriesMenu(title: "US", isSelected: false, backColor: UIColor.clear),
+        CategoriesMenu(title: "US", isSelected: false, backColor: Asset.Colors.redColor.color),
+        CategoriesMenu(title: "World", isSelected: false, backColor: UIColor.clear),
         CategoriesMenu(title: "Arts", isSelected: false, backColor: UIColor.clear),
         CategoriesMenu(title: "Science", isSelected: false, backColor: UIColor.clear),
         CategoriesMenu(title: "Climate", isSelected: false, backColor: UIColor.clear),

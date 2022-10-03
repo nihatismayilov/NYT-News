@@ -87,7 +87,7 @@ extension SaveVC: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SavedCell.identifier, for: indexPath) as! SavedCell
         
-        cell.setupCellWith(img: self.favoriteNews[indexPath.row].image ?? "", title: self.favoriteNews[indexPath.row].title ?? "N/A")
+        cell.setupCellWith(news: self.favoriteNews[indexPath.row])
         
         return cell
     }

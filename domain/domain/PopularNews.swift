@@ -7,16 +7,24 @@
 
 import Foundation
 
-public struct PopularNews {
-    public let results: [PopularResults]?
+public struct PopularNews: Equatable {
+    public static func == (lhs: PopularNews, rhs: PopularNews) -> Bool {
+        lhs.results == rhs.results
+    }
+    
+    public var results: [PopularResults]?
     
     public init(results: [PopularNews.PopularResults]) {
         self.results = results
     }
     
-    public struct PopularResults {
+    public struct PopularResults: Equatable {
+        public static func == (lhs: PopularNews.PopularResults, rhs: PopularNews.PopularResults) -> Bool {
+            lhs.id == rhs.id
+        }
+        
         public let url: String?
-        public let id: Int?
+        public var id: Int?
         public let updateDate: String?
         public let category: String?
         public let title: String?
