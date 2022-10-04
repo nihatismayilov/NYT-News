@@ -7,7 +7,6 @@
 
 import XCTest
 import Promises
-import RxSwift
 @testable import domain
 
 final class UseCaseTests: XCTestCase {
@@ -41,7 +40,6 @@ final class UseCaseTests: XCTestCase {
     func testGetClassificationEventsUseCase1() {
         let useCase1 = GetPopularNewsUseCase(repo: mockData1!)
         
-        let inputData = "TestId"
         var returnedData1: PopularNews?
         
         mockData1?.getPopularNewss.fulfill(expectedData1)
@@ -64,7 +62,6 @@ final class UseCaseTests: XCTestCase {
     func testGetClassificationEventsUseCase2() {
         let useCase2 = GetGategorizedNewsUseCase(repo: mockData2!)
         
-        let inputData = "TestId"
         var returnedData2: CategorizedNews?
         
         mockData2?.getCategorizedNewss.fulfill(expectedData2)
@@ -87,7 +84,6 @@ final class UseCaseTests: XCTestCase {
     func testGetClassificationEventsUseCase3() {
         let useCase3 = GetSearchNewsUseCase(repo: mockData3!)
         
-        let inputData = "TestId"
         var returnedData3: SearchNews?
         
         mockData3?.getSearchedNewss.fulfill(expectedData3)
