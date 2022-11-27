@@ -10,7 +10,6 @@
 		B825C9C928BE585500452978 /* dataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825C9C828BE585500452978 /* dataTests.swift */; };
 		B825C9CA28BE585500452978 /* data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B859504B28BCAE000072E95A /* data.framework */; };
 		B859504F28BCAE000072E95A /* data.h in Headers */ = {isa = PBXBuildFile; fileRef = B859504E28BCAE000072E95A /* data.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B859506028BCAEA50072E95A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B859505F28BCAEA50072E95A /* Alamofire */; };
 		B872184F28CFB4C1006E81D2 /* SearchNewsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B872184E28CFB4C1006E81D2 /* SearchNewsResponseDTO.swift */; };
 		B872185228CFB7F3006E81D2 /* SearchNewsRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B872185128CFB7F3006E81D2 /* SearchNewsRemoteDataSource.swift */; };
 		B872185428CFB804006E81D2 /* SearchNewsRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B872185328CFB804006E81D2 /* SearchNewsRemoteDataSourceProtocol.swift */; };
@@ -20,6 +19,7 @@
 		B884273528E22D8200E1E3E7 /* PopularNewsLocalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B884273428E22D8200E1E3E7 /* PopularNewsLocalDTO.swift */; };
 		B884273828E22F8D00E1E3E7 /* DatabaseProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B884273728E22F8D00E1E3E7 /* DatabaseProviderProtocol.swift */; };
 		B884273A28E22FAA00E1E3E7 /* DatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B884273928E22FAA00E1E3E7 /* DatabaseProvider.swift */; };
+		B885F019290AF2B800CFAE87 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B885F018290AF2B800CFAE87 /* Alamofire */; };
 		B8AD6A4C28CE560B009A660C /* CategorizedNewsRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AD6A4B28CE560B009A660C /* CategorizedNewsRemoteDataSource.swift */; };
 		B8AD6A4E28CE562A009A660C /* CategorizedNewsRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AD6A4D28CE562A009A660C /* CategorizedNewsRemoteDataSourceProtocol.swift */; };
 		B8AD6A5128CE568C009A660C /* CategorizedNewsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AD6A5028CE568C009A660C /* CategorizedNewsResponseDTO.swift */; };
@@ -101,9 +101,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B885F019290AF2B800CFAE87 /* Alamofire in Frameworks */,
 				B8EEFD2428C1E32F0057990E /* RealmSwift in Frameworks */,
 				B8EEFD1628C1E0520057990E /* domain.framework in Frameworks */,
-				B859506028BCAEA50072E95A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,8 +359,8 @@
 			);
 			name = data;
 			packageProductDependencies = (
-				B859505F28BCAEA50072E95A /* Alamofire */,
 				B8EEFD2328C1E32F0057990E /* RealmSwift */,
+				B885F018290AF2B800CFAE87 /* Alamofire */,
 			);
 			productName = data;
 			productReference = B859504B28BCAE000072E95A /* data.framework */;
@@ -395,8 +395,8 @@
 			);
 			mainGroup = B859504128BCAE000072E95A;
 			packageReferences = (
-				B859505E28BCAEA50072E95A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				B8EEFD2228C1E32F0057990E /* XCRemoteSwiftPackageReference "realm-swift" */,
+				B885F017290AF2B800CFAE87 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = B859504C28BCAE000072E95A /* Products */;
 			projectDirPath = "";
@@ -718,7 +718,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B859505E28BCAEA50072E95A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		B885F017290AF2B800CFAE87 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
@@ -737,9 +737,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B859505F28BCAEA50072E95A /* Alamofire */ = {
+		B885F018290AF2B800CFAE87 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B859505E28BCAEA50072E95A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = B885F017290AF2B800CFAE87 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		B8EEFD2328C1E32F0057990E /* RealmSwift */ = {
