@@ -1,5 +1,5 @@
 project("NYT-News.xcodeproj")
-device("iPhone 13")
+device("iPhone 14 Pro")
 
 clean(true)
 
